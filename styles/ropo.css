@@ -1,0 +1,159 @@
+* {
+	box-sizing: border-box;;
+}
+
+html, body {
+	margin: 0; 
+	padding: 0;
+	font-family: Arial, Verdana, Tahoma;
+    background: #f1f1f1; 
+    height: 100% !important;
+}
+
+#app {
+	display: block;
+	overflow: hidden; 
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0; 
+	bottom: 0; 
+	left: 0; 
+	right: 0;
+}
+
+[data-reactroot] {
+	display:flex;
+	width: 100%;
+	flex-direction: column;
+	height: 100% !important;
+	align-items: flex-start;
+}
+
+.content {
+	width: 100%;
+	align-self: flex-end;
+	flex: 0;
+}
+.separator {
+	flex: 1;
+}
+
+nav {
+	align-self: flex-start;
+	background: #999;
+	display: flex; 
+	width: 100%;
+	height: 56px;
+
+	justify-content: space-between;
+	align-items: center;
+}
+
+.title {
+	text-align:center;
+}
+.leftNav {
+	width: 5em;
+	padding-left: 1em;
+}
+
+.rightNav {
+	width: 5em;
+	padding-right: 1em;
+}
+
+
+.availableToday {
+	text-align:center;
+	font-size: 3em;
+	clear:both;
+	display:block;
+}
+
+
+.divider {
+	display: flex;
+	width: 100%;
+	flex-direction: row;
+	flex-wrap: nowrap; 
+	justify-content: space-around;
+}
+.availableThisWeek:before {
+
+}
+
+.availableThisMonth {
+
+}
+
+.add, .add:hover, .add:active, .add:focus {
+	text-align:center;
+	margin:auto;
+	display:block;
+	width: 20vmin;
+	height: 20vmin;
+	font-size: 3em;
+	background: #1abc9c;
+	color: #fff;
+
+	outline: none;
+
+	border-radius: 50%;
+	border: 2px solid rgba(255,255,255, 1);
+	box-shadow: 0 0 3px rgba(50,50,50, .2);
+}
+
+.add:active {
+	margin-top: 0px;
+	background: #16a085;
+}
+
+.keypad {
+	display:flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	width: 100%;
+}
+
+.row {
+	display: flex;
+	width: 100%;
+	flex-direction: row;
+	flex-wrap: nowrap;
+}
+
+.key {
+	text-align: center;
+	line-height: 10vmin;
+	margin: 10px;
+	border-radius: 10px;
+	flex: 1;
+	background: #999;
+	height: 10vmin;
+}
+
+.key:active {
+	background: #fff;
+}
+
+.btn {
+	height: 10vmin; 
+	border-radius: 10px;
+	background: #999;
+	text-align:center;
+	line-height: 10vmin;
+}
+
+.btn-block {
+	width: 100%;
+}
+
+.addValue {
+	width: 100%;
+	text-align:center;
+	border-bottom: 2px solid #666;
+	height: 10vmin;
+	line-height: 10vmin;
+	font-size: 5vmin;
+}

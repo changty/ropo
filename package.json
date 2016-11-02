@@ -1,0 +1,22 @@
+{
+  "name": "ropo",
+  "version": "1.0.0",
+  "description": "Keep track of your spending",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --hot"
+  },
+  "author": "Einari Kurvinen",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "babel-core": "^6.18.0",
+    "babel-loader": "^6.2.7",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "bower": "^1.7.9",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
