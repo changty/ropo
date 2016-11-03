@@ -19,6 +19,7 @@ class App extends React.Component {
         }
         this.state = ropo;
         this.state.view = [];
+        this.state.isRemove = false; //list-view
         this.state.title = 'Day';
 
     }
@@ -93,18 +94,17 @@ class App extends React.Component {
     }
 
     getExpenses(time) {
-        var time = []; 
+        var timeArr = []; 
         var arr = this.state.expenses; 
 
-        for(var i=0; i<arr.length; i++) {
+        for(var i=0; i<arr.length; i++) {   
 
             if(moment(arr.data).isSame(moment(), time)) {
-                time.push(arr[i]);
+                timeArr.push(arr[i]);
             }
-
+ 
         }
-        console.log("Expenses: ", time);
-        return time; 
+        return timeArr; 
     }
 
     updateExpenses(expenses) {
@@ -124,6 +124,12 @@ class App extends React.Component {
         this.setState({expenses: arr}, () => { self.saveState() }); 
         this.close();
 
+    }
+
+    toggleIsRemove() {
+        var isRemove = this.state.isRemove; 
+        console.log("is remove");
+        this.setState({isRemove: !isRemove});
     }
 
     setView(view) { 
@@ -196,6 +202,7 @@ class App extends React.Component {
         else if(this.getCurrentView() === 'list') {
             return (
                 <List 
+                    isRemove = { this.state.isRemove }
                     updateExpenses = { this.updateExpenses.bind(this) }
                     getExpenses = { this.getExpenses.bind(this) }
                 />
@@ -237,6 +244,17 @@ class App extends React.Component {
                 <i className="material-icons">list</i>
                 </button>                
             );
+        }
+
+        else {
+            return (
+                <button 
+                    className="list mdl-button mdl-js-button mdl-js-ripple-effect"
+                    onClick={ this.toggleIsRemove.bind(this) }
+                >
+                <i className="material-icons">delete</i>
+                </button>
+            );     
         }
     }
 

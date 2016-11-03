@@ -26,9 +26,9 @@ class List extends React.Component {
 			    				    <span>{ item.amount } €</span>
 			    				    <span className="mdl-list__item-sub-title">{ moment(item.date).format('MMMM Do YYYY, h:mm:ss a') }</span>
 			    				  </span>
-			    				  <span className="mdl-list__item-secondary-content">
+			    				  <span className={this.props.isRemove ? '' : 'hidden '  + "mdl-list__item-secondary-content"}>
 			    				  	<button 
-			    				  		className="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"
+			    				  		className="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" 
 			    				  		onClick={ this.removeEntry.bind(this, index) }
 			    				  		>
 			    				  	  <i className="material-icons" key={ index }>delete</i>
