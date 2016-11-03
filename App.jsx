@@ -89,7 +89,6 @@ class App extends React.Component {
     }
 
     getMonthlyOriginal() {
-        console.log("monthly", this.state.monthly);
         return this.state.monthly || 0; 
     }
 
@@ -100,12 +99,18 @@ class App extends React.Component {
         for(var i=0; i<arr.length; i++) {
 
             if(moment(arr.data).isSame(moment(), time)) {
-                today.push(arr[i]);
+                time.push(arr[i]);
             }
 
         }
         console.log("Expenses: ", time);
         return time; 
+    }
+
+    updateExpenses(expenses) {
+        console.log("expenses updated");
+        var self = this;
+        this.setState({expenses: expenses}, () => { self.saveState() });
     }
 
 
@@ -161,6 +166,7 @@ class App extends React.Component {
                     monthly={ this.getAvailableFundsMonthly() }
                     weekly={ this.getAvailableFundsWeekly() }
                     daily={ this.getAvailableFundsDaily() }
+                    monthlyOriginal = { this.getMonthlyOriginal() }
                     setView= { this.setView.bind(this) }
                     close={ this.close.bind(this) }
                 />
@@ -190,6 +196,7 @@ class App extends React.Component {
         else if(this.getCurrentView() === 'list') {
             return (
                 <List 
+                    updateExpenses = { this.updateExpenses.bind(this) }
                     getExpenses = { this.getExpenses.bind(this) }
                 />
             );

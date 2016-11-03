@@ -33,13 +33,15 @@ html, body {
 .content {
 	width: 100%;
 	align-self: flex-start;
-	flex: 100;
+	flex: 100 0 auto;
 	margin-bottom: 1em;
 }
+
 .bottom {
 	align-self: flex-end !important;
-	flex: 0 !important;
+	flex: 0 0 auto !important;
 }
+
 .separator {
 	flex: 1;
 }
@@ -70,11 +72,17 @@ nav {
 
 
 .availableToday {
+	display: inline-block;
 	text-align:center;
 	font-size: 3em;
-	clear:both;
-	display:block;
+
+	position: absolute;
+	top: 10vmin;
+	left: 50%;
+	transform: translateX(-50%); 
 }
+
+
 
 
 .divider {
@@ -83,13 +91,24 @@ nav {
 	flex-direction: row;
 	flex-wrap: nowrap; 
 	justify-content: space-around;
+	flex: 1 0 auto;
 }
-.availableThisWeek:before {
-
+.availableThisWeek {
+	width: 100%;
+	text-align:center;
+	font-size: 1em;
+	display: flex;
+	flex-direction: column; 
+	flex-wrap: wrap;
 }
 
 .availableThisMonth {
-
+	width: 100%;
+	text-align:center;
+	font-size: 1em;
+	display: flex;
+	flex-direction: column; 
+	flex-wrap: wrap;
 }
 
 .add-button {
@@ -97,6 +116,11 @@ nav {
 	text-align:center;
 	float:none !important;
 	margin:auto !important;
+
+	position: absolute; 
+	bottom: 2vmin;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 
