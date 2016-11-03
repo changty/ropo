@@ -83,8 +83,14 @@ class App extends React.Component {
             }
 
         }
+        console.log("monthly funds", this.state.monthly);
+
         return parseFloat(value).toFixed(2); 
-        console.log(this.state.monthly);
+    }
+
+    getMonthlyOriginal() {
+        console.log("monthly", this.state.monthly);
+        return this.state.monthly || 0; 
     }
 
     getExpenses(time) {
@@ -141,7 +147,7 @@ class App extends React.Component {
             return (
                 <Settings 
                     update = { this.saveMonthlyValue.bind(this) }
-                    monthly = { this.state.monthly || "" }
+                    monthly = { this.getMonthlyOriginal() }
                     setView = { this.setView.bind(this) }
                     close = { this.close.bind(this) }
                 />
@@ -166,7 +172,7 @@ class App extends React.Component {
             return (
                 <Settings 
                     update = { this.saveMonthlyValue.bind(this) }
-                    monthly = { this.getAvailableFundsMonthly() || 0 }
+                    monthly = { this.getMonthlyOriginal() }
                     setView = { this.setView.bind(this) }
                     close = { this.close.bind(this) }
                 />
