@@ -32,8 +32,13 @@ html, body {
 
 .content {
 	width: 100%;
-	align-self: flex-end;
-	flex: 0;
+	align-self: flex-start;
+	flex: 100;
+	margin-bottom: 1em;
+}
+.bottom {
+	align-self: flex-end !important;
+	flex: 0 !important;
 }
 .separator {
 	flex: 1;
@@ -87,27 +92,13 @@ nav {
 
 }
 
-.add, .add:hover, .add:active, .add:focus {
+.add-button {
+	display: block !important;
 	text-align:center;
-	margin:auto;
-	display:block;
-	width: 20vmin;
-	height: 20vmin;
-	font-size: 3em;
-	background: #1abc9c;
-	color: #fff;
-
-	outline: none;
-
-	border-radius: 50%;
-	border: 2px solid rgba(255,255,255, 1);
-	box-shadow: 0 0 3px rgba(50,50,50, .2);
+	float:none !important;
+	margin:auto !important;
 }
 
-.add:active {
-	margin-top: 0px;
-	background: #16a085;
-}
 
 .keypad {
 	display:flex;
@@ -125,12 +116,16 @@ nav {
 
 .key {
 	text-align: center;
-	line-height: 10vmin;
-	margin: 10px;
-	border-radius: 10px;
+	line-height: 10vmin !important;
+	margin: 0.1em;
+	/*border-radius: 10px;*/
 	flex: 1;
-	background: #999;
+	background: #aaa;
 	height: 10vmin;
+}
+.key .material-icons,
+.key .material-icons.backspace {
+	line-height: 10vmin !important;
 }
 
 .key:active {
@@ -147,6 +142,10 @@ nav {
 
 .btn-block {
 	width: 100%;
+}
+
+.btn-add {
+	height: 10vmin;
 }
 
 .addValue {

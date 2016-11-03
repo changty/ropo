@@ -2,6 +2,7 @@ import React from 'react';
 import Settings from './Settings.jsx';
 import Day from './Day.jsx';
 import Add from './Add.jsx';
+import List from './List.jsx';
 
 
 
@@ -23,12 +24,13 @@ class App extends React.Component {
     }
 
     saveMonthlyValue(value) {
-        this.setState({monthly: value});
-        this.saveState(); 
+        var self = this; 
+        this.setState({monthly: value}, () => { self.saveState() });
     }
 
     saveState() {
-        localStorage.setItem(LOCALSTORAGE_NAME, JSON.stringify(this.state));
+        console.log("SAving state", this.state);
+        localStorage.setItem(LOCALSTORAGE_NAME, JSON.stringify( this.state ));
     }
 
     getWeeksLeft() {
@@ -42,12 +44,32 @@ class App extends React.Component {
     }
     
     getAvailableFundsDaily() {
-        return parseFloat(this.getAvailableFundsMonthly()/this.getDaysLeft()).toFixed(2); 
+        var value = this.state.monthly || 0; 
+        value = value / this.getDaysLeft(); 
+        var arr = this.state.expenses; 
+
+        for(var i=0; i<arr.length; i++) {
+
+            if(moment(arr.data).isSame(moment(), 'day')) {
+                value -= parseFloat(arr[i].amount); 
+            }
+        }
+        return parseFloat(value).toFixed(2); 
 
     }
 
     getAvailableFundsWeekly() {
-        return parseFloat(this.getAvailableFundsMonthly()/this.getWeeksLeft()).toFixed(2); 
+        var value = this.state.monthly || 0; 
+        value = value / this.getWeeksLeft(); 
+        var arr = this.state.expenses; 
+
+        for(var i=0; i<arr.length; i++) {
+
+            if(moment(arr.data).isSame(moment(), 'week')) {
+                value -= parseFloat(arr[i].amount); 
+            }
+        }
+        return parseFloat(value).toFixed(2); 
     }
 
     getAvailableFundsMonthly() {
@@ -55,35 +77,42 @@ class App extends React.Component {
         var arr = this.state.expenses; 
 
         for(var i=0; i<arr.length; i++) {
-            if(moment(arr.date).isAfter(moment().startOf('month')) && moment(arr.date).isBefore(moment().endOf('month')) ) {
+
+            if(moment(arr.data).isSame(moment(), 'month')) {
                 value -= parseFloat(arr[i].amount); 
             }
+
         }
         return parseFloat(value).toFixed(2); 
+        console.log(this.state.monthly);
     }
 
-    getExpensesToday() {
+    getExpenses(time) {
+        var time = []; 
+        var arr = this.state.expenses; 
 
+        for(var i=0; i<arr.length; i++) {
+
+            if(moment(arr.data).isSame(moment(), time)) {
+                today.push(arr[i]);
+            }
+
+        }
+        console.log("Expenses: ", time);
+        return time; 
     }
 
-    getExpensesThisWeek() {
-
-    }
-
-    getExpensesThisMonth() {
-
-    }
 
     addExpense(value) {
-        console.log("clicked!", value);
         var arr = this.state.expenses; 
         arr.push({ 
             date: moment(),
             amount: value, 
         });
+        var self = this; 
+        this.setState({expenses: arr}, () => { self.saveState() }); 
+        this.close();
 
-        this.setState({expenses: arr}); 
-        this.saveState();
     }
 
     setView(view) { 
@@ -112,7 +141,7 @@ class App extends React.Component {
             return (
                 <Settings 
                     update = { this.saveMonthlyValue.bind(this) }
-                    monthly = { this.getAvailableFundsMonthly() || "" }
+                    monthly = { this.state.monthly || "" }
                     setView = { this.setView.bind(this) }
                     close = { this.close.bind(this) }
                 />
@@ -151,28 +180,49 @@ class App extends React.Component {
                 />
             );
         }
+
+        else if(this.getCurrentView() === 'list') {
+            return (
+                <List 
+                    getExpenses = { this.getExpenses.bind(this) }
+                />
+            );
+        }
     }
 
     getLeftNavButton() {
-        console.log(this.getCurrentView());
         if(this.getCurrentView() !== undefined && this.getCurrentView() !== 'day' ) {
             return (
-                <input 
-                 type="button"
-                 value="Close"
-                 className="close"
-                 onClick={ this.close.bind(this) }
-                 />
+
+                <button 
+                    className="settings mdl-button mdl-js-button mdl-js-ripple-effect"
+                    onClick={ this.close.bind(this) }
+                >
+                <i className="material-icons">close</i>
+                </button>
             );
         }
         else {
             return (
-                <input 
-                 type="button"
-                 value="Settings"
-                 className="settings"
-                 onClick={ this.setView.bind(this, 'settings') }
-                 />
+                <button 
+                    className="settings mdl-button mdl-js-button mdl-js-ripple-effect"
+                    onClick={ this.setView.bind(this, 'settings') }
+                >
+                <i className="material-icons">settings</i>
+                </button>
+            );
+        }
+    }
+
+    getRightNavButton() {
+        if(this.getCurrentView() !== 'list') {
+            return (
+                <button 
+                    className="list mdl-button mdl-js-button mdl-js-ripple-effect"
+                    onClick={ this.setView.bind(this, 'list') }
+                >
+                <i className="material-icons">list</i>
+                </button>                
             );
         }
     }
@@ -185,10 +235,11 @@ class App extends React.Component {
                         { this.getLeftNavButton() }
                     </div>
                     <div className="title"> {this.state.title.toUpperCase()} </div>
-                    <div className="rightNav"></div>
+                    <div className="rightNav">
+                        { this.getRightNavButton() }
+                    </div>
                 </nav>
-            <div className="separator"></div>
-
+                <div className="separator"></div>
                   { this.viewSelector() }  
             </div>
         );
