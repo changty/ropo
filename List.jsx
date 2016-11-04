@@ -14,7 +14,7 @@ class List extends React.Component {
 
 	render() {
 		return (
-		    <div className="content">
+		    <div className="content expenseList">
 		    	<ul className="demo-list-two mdl-list">
 
 			    	{ 
@@ -26,6 +26,7 @@ class List extends React.Component {
 			    				    <span>{ item.amount } €</span>
 			    				    <span className="mdl-list__item-sub-title">{ moment(item.date).format('MMMM Do YYYY, h:mm:ss a') }</span>
 			    				  </span>
+
 			    				  <span className={this.props.isRemove ? '' : 'hidden '  + "mdl-list__item-secondary-content"}>
 			    				  	<button 
 			    				  		className="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" 

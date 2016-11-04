@@ -51,7 +51,7 @@ class App extends React.Component {
 
         for(var i=0; i<arr.length; i++) {
 
-            if(moment(arr.data).isSame(moment(), 'day')) {
+            if(moment(arr[i].date).isSame(moment(), 'day')) {
                 value -= parseFloat(arr[i].amount); 
             }
         }
@@ -66,7 +66,7 @@ class App extends React.Component {
 
         for(var i=0; i<arr.length; i++) {
 
-            if(moment(arr.data).isSame(moment(), 'week')) {
+            if(moment(arr[i].date).isSame(moment(), 'week')) {
                 value -= parseFloat(arr[i].amount); 
             }
         }
@@ -79,7 +79,7 @@ class App extends React.Component {
 
         for(var i=0; i<arr.length; i++) {
 
-            if(moment(arr.data).isSame(moment(), 'month')) {
+            if(moment(arr[i].date).isSame(moment(), 'month')) {
                 value -= parseFloat(arr[i].amount); 
             }
 
@@ -99,7 +99,7 @@ class App extends React.Component {
 
         for(var i=0; i<arr.length; i++) {   
 
-            if(moment(arr.data).isSame(moment(), time)) {
+            if(moment(arr[i].date).isSame(moment(), time)) {
                 timeArr.push(arr[i]);
             }
  

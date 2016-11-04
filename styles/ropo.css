@@ -37,7 +37,8 @@ html, body {
 .content {
 	width: 100%;
 	align-self: flex-start;
-	flex: 100 0 auto;
+	flex: 1 0 auto;
+	padding-top: 36px;
 	margin-bottom: 1em;
 }
 
@@ -51,6 +52,9 @@ html, body {
 }
 
 nav {
+	position: fixed;
+	top: 0
+	left:0;
 	align-self: flex-start;
 	background: #999;
 	display: flex; 
@@ -178,4 +182,9 @@ nav {
 	height: 10vmin;
 	line-height: 10vmin;
 	font-size: 5vmin;
+}
+
+.expenseList {
+	height: 100%;
+	overflow: auto;
 }
