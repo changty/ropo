@@ -21,7 +21,9 @@ class Add extends React.Component {
 			str += event.target.innerHTML; 
 		}
 
-		this.setState({value: str}); 
+		if(!isNaN(str)) {
+			this.setState({value: str}); 	
+		}
 	}
 
 	render() {

@@ -1,4 +1,5 @@
 import React from 'react'; 
+import { Line, Circle } from 'react-progressbar.js';
 
 class Settings extends React.Component {
 	
@@ -15,6 +16,31 @@ class Settings extends React.Component {
 		this.props.update(event.target.value);
 	}
 
+		getCircle() {
+
+		var options = {
+		           strokeWidth: 5
+		       };
+
+       // For demo purposes so the container has some dimensions.
+       // Otherwise progress bar won't be shown
+       var containerStyle = {
+           width: '20vmin',
+           height: '20vmin',
+       };
+
+		return (
+			<Circle
+			    progress="100"
+			    text={'test'}
+			    options={options}
+			    initialAnimate={true}
+			    containerStyle={containerStyle}
+			    containerClassName={'progressbar'}
+			 />
+		);
+	}
+
 	getWeeksLeft() {
 		var weeks = moment(moment().endOf('month')).diff(moment().today, 'weeks');
 		return weeks; 
@@ -28,7 +54,6 @@ class Settings extends React.Component {
 	render() {
 		return (
 			<div className="content">
-				<h1>Settings</h1>
 				<h2>Set funds available for this month</h2>
 				<p>Daily funds will be calculated from this moment on.</p>
 				<input 
@@ -44,15 +69,9 @@ class Settings extends React.Component {
 				</p>
 
 				<p>
-					Daily: { this.props.monthly / this.getDaysLeft() }
+					Daily: { this.props.monthly / moment().daysInMonth() }
 				</p>
-
-				<input 
-		        type="button"
-		        value="Exit"
-		        className="exit"
-		        onClick={ this.props.close.bind(this) }
-		        />
+				{this.getCircle()}
 			</div>
 
 

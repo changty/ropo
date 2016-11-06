@@ -1,4 +1,5 @@
 import React from 'react'; 
+import { Line, Circle } from 'react-progressbar.js';
 
 class Day extends React.Component {
 
@@ -13,24 +14,69 @@ class Day extends React.Component {
 		return daysLeft; 
 	}
 
+	getMonthlyStats() {
+		var str = 	'<div class="availableThisMonth">'
+			+		'<span class="original">'+ parseFloat(this.props.monthlyOriginal).toFixed(2) +'</span>'
+			+    	'<span class="now">' +parseFloat(this.props.monthly).toFixed(2) +'</span>'
+			+    	'<span class="description">Left this month</span>'
+			+'</div>'
+
+		console.log(str); 
+		return str; 
+		
+	}
+
+	getProgress() {
+		return parseFloat(this.props.monthly).toFixed(2) / parseFloat(this.props.monthlyOriginal).toFixed(2);
+	}
+
+	getCircle() {
+
+		var options = {
+		           strokeWidth: 5,
+		           tarilWidth: 1,
+		           easing: 'easeInOut',
+		           duration: 1400,
+		       };
+
+       // For demo purposes so the container has some dimensions.
+       // Otherwise progress bar won't be shown
+       var containerStyle = {
+           width: '60vw',
+           height: '60vw',
+       };
+
+		return (
+			<Circle
+			    progress={ this.getProgress() }
+			    text={ this.getMonthlyStats() }
+			    options={options}
+			    initialAnimate={true}
+			    containerStyle={containerStyle}
+			    containerClassName={'progressbar'}
+			 />
+		);
+	}
+
 	render() {
 		return (
-		    <div className="content bottom">
+		    <div className="content middle">
 		        <div className="day-row">
-			        <div className="availableToday">
-			        	<div className="original"> { parseFloat(this.props.monthlyOriginal / this.getDaysLeft()).toFixed(2) } </div>
-			           <div className="now"> { parseFloat(this.props.daily).toFixed(2) }</div>
-			        </div>
+		           { this.getCircle() }
 
-		           <div className="availableThisWeek">
-		           		<span className="original"> { parseFloat(this.props.monthlyOriginal / this.getWeeksLeft()).toFixed(2) } </span>
-		               	<span className="now">{ parseFloat(this.props.weekly).toFixed(2) }</span>
-		           </div>
-		           
-		           <div className="availableThisMonth">
-		           		<span className="original"> { parseFloat(this.props.monthlyOriginal).toFixed(2) } </span>
-		               	<span className="now">{ parseFloat(this.props.monthly).toFixed(2) } </span>
-		           </div> 
+			        <div className="availableToday">
+
+			        	<div className="original">{ parseFloat(this.props.fundsLeft / this.getDaysLeft()).toFixed(2) } </div>
+			           <div className="now">{ parseFloat(this.props.daily).toFixed(2) }</div>
+			           <span className="description">Left today</span>
+
+			        </div>
+					
+		       		{/*} <div className="availableThisWeek">
+		           		<span className="original"> { parseFloat(this.props.weeklyFundsLeft / this.getWeeksLeft()).toFixed(2) } </span>
+		               	<span className="now">{ parseFloat(this.props.weekly).toFixed(2) }</span>	
+		           </div> */}     
+
 			    </div>
 			       
 			       <button 

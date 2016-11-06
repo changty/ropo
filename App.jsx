@@ -3,7 +3,7 @@ import Settings from './Settings.jsx';
 import Day from './Day.jsx';
 import Add from './Add.jsx';
 import List from './List.jsx';
-
+import Progress from './Progress.jsx';
 
 
 var LOCALSTORAGE_NAME = "myRopoData"; 
@@ -30,7 +30,7 @@ class App extends React.Component {
     }
 
     saveState() {
-        console.log("SAving state", this.state);
+        console.log("Saving state", this.state);
         localStorage.setItem(LOCALSTORAGE_NAME, JSON.stringify( this.state ));
     }
 
@@ -40,13 +40,25 @@ class App extends React.Component {
     }
 
     getDaysLeft() {
-        var daysLeft = moment(moment().endOf('month')).diff(moment().today, 'days')
+        var daysLeft = moment(moment().endOf('month')).diff(moment().today, 'days');
+        console.log("days left:", daysLeft);
         return daysLeft; 
+    }
+
+    getWeeksInMonth() {
+        var weeks = moment(moment().endOf('month')).diff(moment().startOf('month'), 'weeks');
+
+        console.log("weeks: ", weeks);
     }
     
     getAvailableFundsDaily() {
+        // old method
         var value = this.state.monthly || 0; 
         value = value / this.getDaysLeft(); 
+
+        // new method
+        value = this.getDailyBudget() / this.getDaysLeft(); 
+
         var arr = this.state.expenses; 
 
         for(var i=0; i<arr.length; i++) {
@@ -60,8 +72,12 @@ class App extends React.Component {
     }
 
     getAvailableFundsWeekly() {
+        // old way
         var value = this.state.monthly || 0; 
         value = value / this.getWeeksLeft(); 
+
+        // new way
+        value = this.getWeeklyBudget() / this.getWeeksLeft();
         var arr = this.state.expenses; 
 
         for(var i=0; i<arr.length; i++) {
@@ -86,6 +102,37 @@ class App extends React.Component {
         }
         console.log("monthly funds", this.state.monthly);
 
+        return parseFloat(value).toFixed(2); 
+    }
+
+    // Return the amount of money left daily on this moment
+    getDailyBudget() {
+        var value = this.state.monthly || 0; 
+        var arr = this.state.expenses; 
+
+        for(var i=0; i<arr.length; i++) {
+
+            if(moment(arr[i].date).isBefore(moment(), 'day')) {
+                value -= parseFloat(arr[i].amount); 
+            }
+
+        }
+        console.log("funds left: ", value);
+        return parseFloat(value).toFixed(2); 
+    }
+
+    getWeeklyBudget() {
+        var value = this.state.monthly || 0; 
+        var arr = this.state.expenses; 
+
+        for(var i=0; i<arr.length; i++) {
+
+            if(moment(arr[i].date).isBefore(moment(), 'week')) {
+                value -= parseFloat(arr[i].amount); 
+            }
+
+        }
+        console.log("funs left weekly: ", value);
         return parseFloat(value).toFixed(2); 
     }
 
@@ -115,6 +162,11 @@ class App extends React.Component {
 
 
     addExpense(value) {
+        // if not a valid number
+        if(isNaN(value) || value == 0) {
+            return
+        }
+
         var arr = this.state.expenses; 
         arr.push({ 
             date: moment(),
@@ -159,6 +211,7 @@ class App extends React.Component {
                 <Settings 
                     update = { this.saveMonthlyValue.bind(this) }
                     monthly = { this.getMonthlyOriginal() }
+                    weeks = { this.getWeeksInMonth() }
                     setView = { this.setView.bind(this) }
                     close = { this.close.bind(this) }
                 />
@@ -168,14 +221,22 @@ class App extends React.Component {
         // monthly is set, show the main view
         if(this.getCurrentView() === undefined || this.getCurrentView() === 'day') {
             return (
+                <div className="noflex">
                 <Day 
                     monthly={ this.getAvailableFundsMonthly() }
                     weekly={ this.getAvailableFundsWeekly() }
                     daily={ this.getAvailableFundsDaily() }
+                    weeklyFundsLeft= { this.getWeeklyBudget() }
+                    fundsLeft={ this.getDailyBudget() }
                     monthlyOriginal = { this.getMonthlyOriginal() }
                     setView= { this.setView.bind(this) }
                     close={ this.close.bind(this) }
                 />
+                <Progress
+                    used = { this.getAvailableFundsDaily() }
+                    full = { this.getDailyBudget() / this.getDaysLeft() }
+                />
+                </div>
             );
         }
 
@@ -185,6 +246,7 @@ class App extends React.Component {
                 <Settings 
                     update = { this.saveMonthlyValue.bind(this) }
                     monthly = { this.getMonthlyOriginal() }
+                    weeks = { this.getWeeksInMonth() }
                     setView = { this.setView.bind(this) }
                     close = { this.close.bind(this) }
                 />
