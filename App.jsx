@@ -257,6 +257,7 @@ class App extends React.Component {
             return (
                 <Add 
                     addExpense = { this.addExpense.bind(this) }
+                    title = { {type: 'icon', content: 'add'} }
                 />
             );
         }

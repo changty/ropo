@@ -1,44 +1,34 @@
 import React from 'react'; 
 import { Line, Circle } from 'react-progressbar.js';
+import Add from './Add.jsx';
 
 class Settings extends React.Component {
 	
-	saveChanges(event) {		
-		event.target.value = event.target.value.replace(',', '.');
+	saveChanges(event) {	
 
-		if(event.target.value.slice(-1) === "."){
-			event.target.value = parseFloat(event.target.value) + event.target.value.slice(-1) || 0;
+		// event.target.value = event.target.value.replace(',', '.');
+
+		// if(event.target.value.slice(-1) === "."){
+		// 	event.target.value = parseFloat(event.target.value) + event.target.value.slice(-1) || 0;
+		// }
+		// else {
+		// 	event.target.value = parseFloat(event.target.value) || 0;
+		// }
+
+		// this.props.update(event.target.value);
+
+
+		event= event.replace(',', '.');
+
+		if(event.slice(-1) === "."){
+			event = parseFloat(event) + event.slice(-1) || 0;
 		}
 		else {
-			event.target.value = parseFloat(event.target.value) || 0;
+			event = parseFloat(event) || 0;
 		}
 
-		this.props.update(event.target.value);
-	}
-
-		getCircle() {
-
-		var options = {
-		           strokeWidth: 5
-		       };
-
-       // For demo purposes so the container has some dimensions.
-       // Otherwise progress bar won't be shown
-       var containerStyle = {
-           width: '20vmin',
-           height: '20vmin',
-       };
-
-		return (
-			<Circle
-			    progress="100"
-			    text={'test'}
-			    options={options}
-			    initialAnimate={true}
-			    containerStyle={containerStyle}
-			    containerClassName={'progressbar'}
-			 />
-		);
+		console.log(event);
+		this.props.update(event);
 	}
 
 	getWeeksLeft() {
@@ -54,9 +44,9 @@ class Settings extends React.Component {
 	render() {
 		return (
 			<div className="content">
-				<h2>Set funds available for this month</h2>
-				<p>Daily funds will be calculated from this moment on.</p>
-				<input 
+				<h4>Set funds available for this month</h4>
+				
+				{ /*<input 
 					autoFocus
 					type="text"
 					defaultValue= { this.props.monthly }  
@@ -64,14 +54,20 @@ class Settings extends React.Component {
 					ref="monthlyInput"
 					onChange={ this.saveChanges.bind(this) }
 				/>
-				<p>
-					Weekly: { this.props.monthly / this.getWeeksLeft() }
-				</p>
+			*/}
 
-				<p>
-					Daily: { this.props.monthly / moment().daysInMonth() }
-				</p>
-				{this.getCircle()}
+				<div className="availableToday">
+					<div className="now">{ parseFloat(this.props.monthly / moment().daysInMonth()).toFixed(2) } </div>
+				   <span className="description">Daily budget</span>
+
+				</div>
+
+				<Add
+					defaultValue = { this.props.monthly }
+					title = { {type: 'text', content: "Set monthly budget" } }
+					addExpense={ this.saveChanges.bind(this) }
+				/>
+
 			</div>
 
 

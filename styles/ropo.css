@@ -37,10 +37,12 @@ html, body {
 }
 
 .content {
+	text-align:center;
 	position: relative;
 	width: 100%;
 	align-self: flex-start;
 	/*flex: 1 0 auto;*/
+	padding: 2vmin 2vmin;
 	padding-top: 36px;
 	margin-bottom: 1em;
 	z-index: 10;
@@ -50,6 +52,10 @@ html, body {
 
 .content.bottom {
 	height: auto;
+	position: absolute;
+	bottom: 2vmin;
+	padding-bottom: 0;
+	/*align-items: flex-end;*/
 }
 
 .content.middle {
@@ -57,8 +63,7 @@ html, body {
 }
 
 .bottom {
-	align-self: flex-end !important;
-	flex: 0 0 auto !important;
+
 }
 
 .separator {
@@ -133,7 +138,7 @@ nav {
 	order: 3;
 	display: flex;
 	text-align:center;
-	font-size: 3em;
+	font-size: 7.5vmin;
 	line-height: 1;
 	flex-flow: column;
 	/*margin-bottom: 10vh;*/

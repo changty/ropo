@@ -1,10 +1,10 @@
 import React from 'react'; 
 
 class Add extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
-			value: "0"
+			value: this.props.defaultValue || "0"
 		}
 	}
 
@@ -26,6 +26,29 @@ class Add extends React.Component {
 		}
 	}
 
+	getButton() {
+		if(this.props.title.type != 'icon') {
+			return(
+				<button 
+					className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-block btn-add" 
+					onClick={ this.props.addExpense.bind(this, this.state.value) }
+				>
+					{ this.props.title.content }
+				</button>
+			);
+
+		}
+		else {
+			return(
+				<button 
+					className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-block btn-add" 
+					onClick={ this.props.addExpense.bind(this, this.state.value) }
+				>
+					<i className="material-icons">{this.props.title.content}</i>
+				</button>
+			);
+		}
+	}
 	render() {
 		return (
 			<div className="content bottom">
@@ -54,12 +77,8 @@ class Add extends React.Component {
 						<div className="key keyDot mdl-button mdl-js-button mdl-js-ripple-effect" onClick={this.changeValue.bind(this)}>.</div>
 					</div>
 				</div>
-				<button 
-					className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-block btn-add" 
-					onClick={ this.props.addExpense.bind(this, this.state.value) }
-				>
-					<i className="material-icons">add</i>
-				</button>
+				{ this.getButton() }
+
 			</div>
 
 

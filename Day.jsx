@@ -16,8 +16,9 @@ class Day extends React.Component {
 
 	getMonthlyStats() {
 		var str = 	'<div class="availableThisMonth">'
-			+		'<span class="original">'+ parseFloat(this.props.monthlyOriginal).toFixed(2) +'</span>'
-			+    	'<span class="now">' +parseFloat(this.props.monthly).toFixed(2) +'</span>'
+			// +		'<span class="original">'+ parseFloat(this.props.monthlyOriginal).toFixed(2) +'</span>'
+			+ 		'<span class="original">' + this.getDaysLeft() + ' days </span>'
+			+    	'<span class="now">' +parseFloat(this.props.monthly).toFixed(2) +' €</span>'
 			+    	'<span class="description">Left this month</span>'
 			+'</div>'
 
