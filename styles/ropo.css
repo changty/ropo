@@ -151,6 +151,11 @@ nav {
 	font-size: .4em;
 }
 
+.forecast {
+	margin-top: 2vh;
+	font-size: .8em;
+}
+
 .add-button {
 	display: block !important;
 	text-align:center;
@@ -228,6 +233,10 @@ nav {
 .expenseList {
 	height: 100%;
 	overflow: auto;
+}
+
+.expenseList ul li {
+	text-align:left;
 }
 
 .progress-container {

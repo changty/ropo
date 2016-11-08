@@ -44,7 +44,7 @@ class Settings extends React.Component {
 	render() {
 		return (
 			<div className="content">
-				<h4>Set funds available for this month</h4>
+				<h4>Set budget for this month</h4>
 				
 				{ /*<input 
 					autoFocus

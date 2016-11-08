@@ -14,12 +14,22 @@ class Day extends React.Component {
 		return daysLeft; 
 	}
 
+	getForecast() {
+		var averageSpendnig = (this.props.monthlyOriginal - this.props.monthly) / (moment().daysInMonth() - this.getDaysLeft()); 
+		console.log("average spending: ", averageSpendnig);
+		return parseFloat(this.props.monthly - (this.getDaysLeft() * averageSpendnig)).toFixed(2);
+	}
+
 	getMonthlyStats() {
 		var str = 	'<div class="availableThisMonth">'
 			// +		'<span class="original">'+ parseFloat(this.props.monthlyOriginal).toFixed(2) +'</span>'
 			+ 		'<span class="original">' + this.getDaysLeft() + ' days </span>'
-			+    	'<span class="now">' +parseFloat(this.props.monthly).toFixed(2) +' €</span>'
+			+    	'<span class="now">' +parseFloat(this.props.monthly).toFixed(2) +'€</span>'
 			+    	'<span class="description">Left this month</span>'
+
+			+		'<span class="forecast">' + this.getForecast() + '€</span>'
+			+    	'<span class="description">Estimated balance</span>'
+
 			+'</div>'
 
 		console.log(str); 
@@ -66,8 +76,7 @@ class Day extends React.Component {
 		           { this.getCircle() }
 
 			        <div className="availableToday">
-
-			        	<div className="original">{ parseFloat(this.props.fundsLeft / this.getDaysLeft()).toFixed(2) } </div>
+			        	{/*<div className="original">{ parseFloat(this.props.fundsLeft / this.getDaysLeft()).toFixed(2) } </div>*/}
 			           <div className="now">{ parseFloat(this.props.daily).toFixed(2) }</div>
 			           <span className="description">Left today</span>
 

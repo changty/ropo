@@ -2,7 +2,13 @@ import React from 'react';
 
 class List extends React.Component {
 	getExpenses(value) {
-		return this.props.getExpenses(value);
+		var array = this.props.getExpenses(value);
+		array.sort(function(a,b){
+		  // Turn your strings into dates, and then subtract them
+		  // to get a value that is either negative, positive, or zero.
+		  return new moment(b.date).diff(moment(a.date));
+		});
+		return array;
 	}
 
 	removeEntry(index) {
@@ -22,7 +28,7 @@ class List extends React.Component {
 			    			return (
 			    				<li key={ index } className="mdl-list__item mdl-list__item--two-line">
 			    				  <span className="mdl-list__item-primary-content">
-			    				    <i className="material-icons mdl-list__item-avatar">done</i>
+			    				    <i className="material-icons mdl-list__item-avatar">check</i>
 			    				    <span>{ item.amount } €</span>
 			    				    <span className="mdl-list__item-sub-title">{ moment(item.date).format('MMMM Do YYYY, h:mm:ss a') }</span>
 			    				  </span>
