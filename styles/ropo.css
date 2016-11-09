@@ -108,7 +108,7 @@ nav {
 	width: 100%;
 	flex-direction: column-reverse;
 	flex-wrap: nowrap; 
-	justify-content: space-around;
+	justify-content: center;
 	align-items: center;
 	flex: 1;
 	height: 100%;
@@ -116,7 +116,7 @@ nav {
 }
 
 .availableToday {
-	order: 2;
+	order: 3;
 	display: flex;
 	text-align:center;
 	font-size: 5em;
@@ -135,13 +135,23 @@ nav {
 }
 
 .availableThisMonth {
-	order: 3;
+	order: 2;
 	display: flex;
 	text-align:center;
 	font-size: 7.5vmin;
 	line-height: 1;
 	flex-flow: column;
+	color: #000;
+
 	/*margin-bottom: 10vh;*/
+}
+
+.forecastContainer {
+	order: 1;
+	display: flex;
+	flex-flow: column;
+	font-size: 8vmin;
+	margin-bottom: 10vh;
 }
 
 .original {
@@ -163,10 +173,15 @@ nav {
 	margin:auto !important;
 
 	position: absolute;
-	bottom: 2vmin;
+	bottom: 5vh;
 	left: 50%;
 	transform: translateX(-50%);
 	z-index: 1000;
+}
+
+.keyOk { 
+	background: #ff4081 !important;
+	color: white !important;
 }
 
 
@@ -186,13 +201,13 @@ nav {
 
 .key {
 	text-align: center;
-	line-height: 10vmin !important;
+	line-height: 15vmin !important;
 	margin: .5vmin 1vmin; 
 	font-size: 8vmin;
 	/*border-radius: 10px;*/
 	flex: 1;
 	background: #aaa;
-	height: 10vmin;
+	height: 15vmin;
 }
 .key .material-icons,
 .key .material-icons.backspace {
@@ -271,4 +286,5 @@ nav {
 	z-index: 999999;
 	max-width: 60vmin;
 	max-height: 60vmin;
+	margin-bottom: 10vh;
 }

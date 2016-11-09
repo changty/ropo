@@ -1,5 +1,5 @@
 import React from 'react'; 
-import { Line, Circle } from 'react-progressbar.js';
+import { SemiCircle, Line, Circle } from 'react-progressbar.js';
 
 class Day extends React.Component {
 
@@ -15,20 +15,22 @@ class Day extends React.Component {
 	}
 
 	getForecast() {
-		var averageSpendnig = (this.props.monthlyOriginal - this.props.monthly) / (moment().daysInMonth() - this.getDaysLeft()); 
-		console.log("average spending: ", averageSpendnig);
-		return parseFloat(this.props.monthly - (this.getDaysLeft() * averageSpendnig)).toFixed(2);
+		// var averageSpending = (this.props.monthlyOriginal - this.props.monthly) / (moment().daysInMonth() - this.getDaysLeft()); 
+		var averagePerDay = this.props.monthlyOriginal / moment().daysInMonth(); 
+
+		var averageSpending = this.props.monthly - (parseFloat(averagePerDay) * parseFloat(this.getDaysLeft()));
+		console.log("average spending: ", averageSpending);
+
+		return parseFloat(averageSpending).toFixed(2);
+		// return parseFloat(this.props.monthly - (this.getDaysLeft() * averageSpending)).toFixed(2);
 	}
 
 	getMonthlyStats() {
 		var str = 	'<div class="availableThisMonth">'
 			// +		'<span class="original">'+ parseFloat(this.props.monthlyOriginal).toFixed(2) +'</span>'
-			+ 		'<span class="original">' + this.getDaysLeft() + ' days </span>'
+			//+ 		'<span class="original">' + this.getDaysLeft() + ' days </span>'
 			+    	'<span class="now">' +parseFloat(this.props.monthly).toFixed(2) +'€</span>'
-			+    	'<span class="description">Left this month</span>'
-
-			+		'<span class="forecast">' + this.getForecast() + '€</span>'
-			+    	'<span class="description">Estimated balance</span>'
+			+    	'<span class="description">Left of '+ parseFloat(this.props.monthlyOriginal).toFixed(2)+'€</span>'
 
 			+'</div>'
 
@@ -45,22 +47,26 @@ class Day extends React.Component {
 
 		var options = {
 		           strokeWidth: 5,
-		           tarilWidth: 1,
+		           trailWidth: 2,
+		           color: '#ff4081',
+		           trailColor: '#ffffff',
 		           easing: 'easeInOut',
 		           duration: 1400,
+		           text: {
+		           	value: this.getMonthlyStats()
+		           }
 		       };
 
        // For demo purposes so the container has some dimensions.
        // Otherwise progress bar won't be shown
        var containerStyle = {
            width: '60vw',
-           height: '60vw',
+           height: '25vw',
        };
 
 		return (
-			<Circle
+			<SemiCircle
 			    progress={ this.getProgress() }
-			    text={ this.getMonthlyStats() }
 			    options={options}
 			    initialAnimate={true}
 			    containerStyle={containerStyle}
@@ -77,8 +83,8 @@ class Day extends React.Component {
 
 			        <div className="availableToday">
 			        	{/*<div className="original">{ parseFloat(this.props.fundsLeft / this.getDaysLeft()).toFixed(2) } </div>*/}
-			           <div className="now">{ parseFloat(this.props.daily).toFixed(2) }</div>
-			           <span className="description">Left today</span>
+			           <div className="now">{ parseFloat(this.props.daily).toFixed(2) }€</div>
+			           <span className="description">Left of { parseFloat(this.props.monthlyOriginal / moment().daysInMonth()).toFixed(2) }€</span>
 
 			        </div>
 					
@@ -86,8 +92,13 @@ class Day extends React.Component {
 		           		<span className="original"> { parseFloat(this.props.weeklyFundsLeft / this.getWeeksLeft()).toFixed(2) } </span>
 		               	<span className="now">{ parseFloat(this.props.weekly).toFixed(2) }</span>	
 		           </div> */}     
+		           <div className="forecastContainer">
+		           	<span className="forecast"> { this.getForecast() } €</span>
+		           	<span className="description">Estimated balance</span>
+		           </div>
 
 			    </div>
+
 			       
 			       <button 
 			       		className="add-button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"

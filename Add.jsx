@@ -4,25 +4,57 @@ class Add extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			value: this.props.defaultValue || "0"
+			value: this.props.defaultValue || "0.00",
+			index: 0
 		}
 	}
 
 	changeValue(event) {
-		var str = this.state.value; 
-		console.log(event.target.className);
+		var str = this.state.value.toString(); 
+		var index = this.state.index;
+
+		str = str.replace(".", ""); 
+		// backspace
 		if(event.target.className.indexOf('backspace') !== -1) {
-			str = str.slice(0, -1); 
+			// index--; 
+			// this.setState({index: index}); 
+			//str = str.slice(0, -1); 
+			str = str.slice(0, -1);
+			if(index > 0) {
+				index--;	
+			}
 		}
-		else if(str === "0") {
-			str = event.target.innerHTML; 
-		} 
 		else {
-			str += event.target.innerHTML; 
+			index++; 
+			str += event.target.innerHTML;
 		}
 
+		// else if(str === "0") {
+		// 	str = event.target.innerHTML; 
+		// } 
+		// else {
+		// 	str += event.target.innerHTML; 
+		// }
+
+
+		if(index < 4) {
+			str = str.substring(1, str.length); 
+		}
+
+
+		if(str.length === 1) {
+ 			str = "00" + str;  
+		}
+		else if(str.length === 2) {
+			str = "0" + str; 
+		}
+
+
+		// Add decimal point
+		str = str.slice(0, -2) + "." + str.slice(-2); 
+
 		if(!isNaN(str)) {
-			this.setState({value: str}); 	
+			this.setState({value: str, index: index});
 		}
 	}
 
@@ -31,7 +63,6 @@ class Add extends React.Component {
 			return(
 				<button 
 					className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-block btn-add" 
-					onClick={ this.props.addExpense.bind(this, this.state.value) }
 				>
 					{ this.props.title.content }
 				</button>
@@ -74,10 +105,9 @@ class Add extends React.Component {
 					<div  className="row">
 						<div className="key keyBackSpace backspace mdl-button mdl-js-button mdl-js-ripple-effect" onClick={this.changeValue.bind(this)}><i className="material-icons backspace">backspace</i></div>						
 						<div className="key key0 mdl-button mdl-js-button mdl-js-ripple-effect" onClick={this.changeValue.bind(this)}>0</div>
-						<div className="key keyDot mdl-button mdl-js-button mdl-js-ripple-effect" onClick={this.changeValue.bind(this)}>.</div>
+						<div className="key keyOk mdl-button mdl-js-button mdl-js-ripple-effect" onClick={ this.props.addExpense.bind(this, this.state.value) }> <i className="material-icons">{this.props.title.content}</i> </div>
 					</div>
 				</div>
-				{ this.getButton() }
 
 			</div>
 

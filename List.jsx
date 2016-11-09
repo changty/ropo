@@ -12,10 +12,15 @@ class List extends React.Component {
 	}
 
 	removeEntry(index) {
-		var arr = this.props.getExpenses('month'); 
-		arr.splice(index, 1); 
+		var array = this.props.getExpenses('month'); 
+		array.sort(function(a,b){
+		  // Turn your strings into dates, and then subtract them
+		  // to get a value that is either negative, positive, or zero.
+		  return new moment(b.date).diff(moment(a.date));
+		});
+		array.splice(index, 1); 
 
-		this.props.updateExpenses(arr);	
+		this.props.updateExpenses(array);	
 	}
 
 	render() {

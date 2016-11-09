@@ -64,7 +64,7 @@ class Settings extends React.Component {
 
 				<Add
 					defaultValue = { this.props.monthly }
-					title = { {type: 'text', content: "Set monthly budget" } }
+					title = { {type: 'icon', content: "done" } }
 					addExpense={ this.saveChanges.bind(this) }
 				/>
 
