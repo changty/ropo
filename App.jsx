@@ -3,6 +3,9 @@ import Settings from './Settings.jsx';
 import Day from './Day.jsx';
 import Add from './Add.jsx';
 import List from './List.jsx';
+
+import SwipeableViews from 'react-swipeable-views'; 
+
 import Progress from './Progress.jsx';
 
 
@@ -196,123 +199,74 @@ class App extends React.Component {
         var arr = this.state.view; 
         arr.splice(-1, 1); 
         this.setState({view: arr});
-
-        if(arr.length === 0) {
-            this.setState({title: 'Day'});
-        }
-
     }
 
     viewSelector() {
-        // empty state
-        // Open settings
-        if(this.getCurrentView() === undefined && this.state.monthly === undefined) {
-            return (
-                <Settings 
-                    update = { this.saveMonthlyValue.bind(this) }
-                    monthly = { this.getMonthlyOriginal() }
-                    weeks = { this.getWeeksInMonth() }
-                    setView = { this.setView.bind(this) }
-                    close = { this.close.bind(this) }
-                />
-            );
-        }
-
-        // monthly is set, show the main view
-        if(this.getCurrentView() === undefined || this.getCurrentView() === 'day') {
-            return (
-                <div className="noflex">
-                <Day 
-                    monthly={ this.getAvailableFundsMonthly() }
-                    weekly={ this.getAvailableFundsWeekly() }
-                    daily={ this.getAvailableFundsDaily() }
-                    weeklyFundsLeft= { this.getWeeklyBudget() }
-                    fundsLeft={ this.getDailyBudget() }
-                    monthlyOriginal = { this.getMonthlyOriginal() }
-                    setView= { this.setView.bind(this) }
-                    close={ this.close.bind(this) }
-                />
-                <Progress
-                    used = { this.getAvailableFundsDaily() }
-                    full = { this.getDailyBudget() / this.getDaysLeft() }
-                />
-                </div>
-            );
-        }
-
-        // settings opened
-        else if(this.getCurrentView() === 'settings') {
-            return (
-                <Settings 
-                    update = { this.saveMonthlyValue.bind(this) }
-                    monthly = { this.getMonthlyOriginal() }
-                    weeks = { this.getWeeksInMonth() }
-                    setView = { this.setView.bind(this) }
-                    close = { this.close.bind(this) }
-                />
-            );
-        }
-
-        else if(this.getCurrentView() === 'add') {
+        console.log(this.getCurrentView());
+       if(this.getCurrentView() == 'add') {
             return (
                 <Add 
                     addExpense = { this.addExpense.bind(this) }
                     title = { {type: 'icon', content: 'add'} }
                 />
             );
-        }
-
-        else if(this.getCurrentView() === 'list') {
+       }
+       else {
             return (
-                <List 
-                    isRemove = { this.state.isRemove }
-                    updateExpenses = { this.updateExpenses.bind(this) }
-                    getExpenses = { this.getExpenses.bind(this) }
-                />
+                <SwipeableViews
+                    index= { this.getCurrentView() }
+                    resistance = { true }
+                    onChangeIndex = { this.onChangeIndex.bind(this) }
+                >
+
+                    <Settings 
+                        update = { this.saveMonthlyValue.bind(this) }
+                        monthly = { this.getMonthlyOriginal() }
+                        weeks = { this.getWeeksInMonth() }
+                    />
+
+                    <Day 
+                        monthly={ this.getAvailableFundsMonthly() }
+                        weekly={ this.getAvailableFundsWeekly() }
+                        daily={ this.getAvailableFundsDaily() }
+                        weeklyFundsLeft= { this.getWeeklyBudget() }
+                        fundsLeft={ this.getDailyBudget() }
+                        monthlyOriginal = { this.getMonthlyOriginal() }
+                        setView= { this.setView.bind(this) }
+                        close={ this.close.bind(this) }
+                    />
+
+                    <List 
+                        isRemove = { this.state.isRemove }
+                        updateExpenses = { this.updateExpenses.bind(this) }
+                        getExpenses = { this.getExpenses.bind(this) }
+                    />
+
+
+                </SwipeableViews>
             );
-        }
+
+       }
     }
 
     getLeftNavButton() {
-        if(this.getCurrentView() !== undefined && this.getCurrentView() !== 'day' ) {
+        if(this.getCurrentView() == 'add') {
             return (
-
                 <button 
-                    className="settings mdl-button mdl-js-button mdl-js-ripple-effect"
+                    className="leftNav mdl-button mdl-js-button mdl-js-ripple-effect"
                     onClick={ this.close.bind(this) }
                 >
                 <i className="material-icons">close</i>
                 </button>
             );
         }
-        else {
-            return (
-                <button 
-                    className="settings mdl-button mdl-js-button mdl-js-ripple-effect"
-                    onClick={ this.setView.bind(this, 'settings') }
-                >
-                <i className="material-icons">settings</i>
-                </button>
-            );
-        }
     }
 
     getRightNavButton() {
-        if(this.getCurrentView() !== 'list') {
+        if(this.getCurrentView() == '2') {
             return (
                 <button 
-                    className="list mdl-button mdl-js-button mdl-js-ripple-effect"
-                    onClick={ this.setView.bind(this, 'list') }
-                >
-                <i className="material-icons">list</i>
-                </button>                
-            );
-        }
-
-        else {
-            return (
-                <button 
-                    className="list mdl-button mdl-js-button mdl-js-ripple-effect"
+                    className="rightNav list mdl-button mdl-js-button mdl-js-ripple-effect"
                     onClick={ this.toggleIsRemove.bind(this) }
                 >
                 <i className="material-icons">delete</i>
@@ -321,7 +275,19 @@ class App extends React.Component {
         }
     }
 
+    onChangeIndex(index, indexLatest) {
+        this.setView(index);
+    }
+
     render() {
+        return (
+            <div>
+            { this.getLeftNavButton() }
+            { this.getRightNavButton() }
+            { this.viewSelector() }
+            </div>
+        );
+        /*
         return (
             <div>
                 <nav>
@@ -337,6 +303,8 @@ class App extends React.Component {
                   { this.viewSelector() }  
             </div>
         );
+
+        */
     }
 
 }

@@ -3,22 +3,15 @@ import { Line, Circle } from 'react-progressbar.js';
 import Add from './Add.jsx';
 
 class Settings extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			monthly: this.props.monthly,
+		}
+	}
 	
-	saveChanges(event) {	
-
-		// event.target.value = event.target.value.replace(',', '.');
-
-		// if(event.target.value.slice(-1) === "."){
-		// 	event.target.value = parseFloat(event.target.value) + event.target.value.slice(-1) || 0;
-		// }
-		// else {
-		// 	event.target.value = parseFloat(event.target.value) || 0;
-		// }
-
-		// this.props.update(event.target.value);
-
-
-		event= event.replace(',', '.');
+	saveChanges(event) {
+		event = event.replace(',', '.');
 
 		if(event.slice(-1) === "."){
 			event = parseFloat(event) + event.slice(-1) || 0;
@@ -27,8 +20,11 @@ class Settings extends React.Component {
 			event = parseFloat(event) || 0;
 		}
 
-		console.log(event);
 		this.props.update(event);
+	}
+
+	updateMonthly(monthly) {
+		this.setState({monthly: monthly});
 	}
 
 	getWeeksLeft() {
@@ -57,7 +53,7 @@ class Settings extends React.Component {
 			*/}
 
 				<div className="availableToday">
-					<div className="now">{ parseFloat(this.props.monthly / moment().daysInMonth()).toFixed(2) } </div>
+					<div className="now">{ parseFloat(this.state.monthly / moment().daysInMonth()).toFixed(2) } </div>
 				   <span className="description">Daily budget</span>
 
 				</div>
@@ -65,6 +61,7 @@ class Settings extends React.Component {
 				<Add
 					defaultValue = { this.props.monthly }
 					title = { {type: 'icon', content: "done" } }
+					updateValue = { this.updateMonthly.bind(this) }
 					addExpense={ this.saveChanges.bind(this) }
 				/>
 

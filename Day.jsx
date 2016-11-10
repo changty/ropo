@@ -77,7 +77,7 @@ class Day extends React.Component {
 
 	render() {
 		return (
-		    <div className="content middle">
+		    <div className="content">
 		        <div className="day-row">
 		           { this.getCircle() }
 
@@ -97,15 +97,15 @@ class Day extends React.Component {
 		           	<span className="description">Estimated balance</span>
 		           </div>
 
+
+		           <button 
+		           		className="add-button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+		           		onClick={ this.props.setView.bind(this, 'add') }
+		           		>
+		             	<i className="material-icons">add</i>
+		           </button>
 			    </div>
 
-			       
-			       <button 
-			       		className="add-button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
-			       		onClick={ this.props.setView.bind(this, 'add') }
-			       		>
-			         <i className="material-icons">add</i>
-			       </button>
 		    </div>
 		);
 	}

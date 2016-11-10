@@ -16,7 +16,9 @@
     "bower": "^1.7.9",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "react-motion": "^0.4.5",
     "react-progressbar.js": "^0.2.0",
+    "react-swipeable-views": "^0.8.0",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"
   }
