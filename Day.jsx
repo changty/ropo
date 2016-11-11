@@ -1,5 +1,6 @@
 import React from 'react'; 
 import { SemiCircle, Line, Circle } from 'react-progressbar.js';
+import  RadialProgressChart from 'radial-progress-chart';
 
 class Day extends React.Component {
 
@@ -75,6 +76,12 @@ class Day extends React.Component {
 		);
 	}
 
+	componentDidMount() {
+		console.log("moi!");
+		new RadialProgressChart('.test', {series: [24, 85]});
+
+	}
+
 	render() {
 		return (
 		    <div className="content">
@@ -96,7 +103,7 @@ class Day extends React.Component {
 		           	<span className="forecast"> { this.getForecast() } €</span>
 		           	<span className="description">Estimated balance</span>
 		           </div>
-
+		           <div className="test"></div>
 
 		           <button 
 		           		className="add-button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"

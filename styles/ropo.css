@@ -154,6 +154,11 @@ html, body {
 	font-size: .8em;
 }
 
+.test {
+	height: 40vmin;
+	width: 40vmin;
+}
+
 .add-button {
 	display: block !important;
 	text-align:center;
