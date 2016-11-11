@@ -154,9 +154,9 @@ html, body {
 	font-size: .8em;
 }
 
-.test {
-	height: 40vmin;
-	width: 40vmin;
+.progress {
+	height: 95vmin;
+	width: 95vmin;
 }
 
 .add-button {
@@ -166,9 +166,9 @@ html, body {
 	margin:auto !important;
 
 	position: absolute;
-	bottom: 5vh;
+	top: 50%;
 	left: 50%;
-	transform: translateX(-50%);
+	transform: translate(-50%, -50%);
 	z-index: 1000;
 }
 
@@ -245,4 +245,9 @@ html, body {
 
 .expenseList ul li {
 	text-align:left;
+}
+
+svg text.rbc-label-start {
+	color: #fff !important;
+	font-size: 16px !important;
 }

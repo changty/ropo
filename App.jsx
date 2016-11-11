@@ -70,7 +70,7 @@ class App extends React.Component {
                 value -= parseFloat(arr[i].amount); 
             }
         }
-        return parseFloat(value).toFixed(2); 
+        return value; 
 
     }
 
@@ -80,7 +80,7 @@ class App extends React.Component {
         value = value / this.getWeeksLeft(); 
 
         // new way
-        value = this.getWeeklyBudget() / this.getWeeksLeft();
+        value = this.getWeeklyBudget() / (this.getDaysLeft()/7);
         var arr = this.state.expenses; 
 
         for(var i=0; i<arr.length; i++) {
@@ -89,7 +89,8 @@ class App extends React.Component {
                 value -= parseFloat(arr[i].amount); 
             }
         }
-        return parseFloat(value).toFixed(2); 
+        console.log("GetAvailable funds weekly", value);
+        return value; 
     }
 
     getAvailableFundsMonthly() {
@@ -105,7 +106,7 @@ class App extends React.Component {
         }
         console.log("monthly funds", this.state.monthly);
 
-        return parseFloat(value).toFixed(2); 
+        return value; 
     }
 
     // Return the amount of money left daily on this moment
@@ -121,7 +122,7 @@ class App extends React.Component {
 
         }
         console.log("funds left: ", value);
-        return parseFloat(value).toFixed(2); 
+        return value; 
     }
 
     getWeeklyBudget() {
@@ -136,7 +137,7 @@ class App extends React.Component {
 
         }
         console.log("funs left weekly: ", value);
-        return parseFloat(value).toFixed(2); 
+        return value; 
     }
 
     getMonthlyOriginal() {
@@ -279,7 +280,8 @@ class App extends React.Component {
         this.setView(index);
     }
 
-    render() {
+    render() {;
+        
         return (
             <div>
             { this.getLeftNavButton() }
@@ -287,6 +289,8 @@ class App extends React.Component {
             { this.viewSelector() }
             </div>
         );
+        
+
         /*
         return (
             <div>

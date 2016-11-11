@@ -2,8 +2,8 @@ import React from 'react';
 import { SemiCircle, Line, Circle } from 'react-progressbar.js';
 import  RadialProgressChart from 'radial-progress-chart';
 
+let progress; 
 class Day extends React.Component {
-
 
 	getWeeksLeft() {
 		var weeks = moment(moment().endOf('month')).diff(moment().today, 'weeks');
@@ -44,73 +44,52 @@ class Day extends React.Component {
 		return parseFloat(this.props.monthly).toFixed(2) / parseFloat(this.props.monthlyOriginal).toFixed(2);
 	}
 
-	getCircle() {
+	getDataSeries() {
+		var monthly = (this.props.monthly / this.props.monthlyOriginal) * 100;
+		var weekly = this.props.weekly / (this.props.monthlyOriginal / 4 ) * 100; 
+		var daily = this.props.daily / (this.props.monthlyOriginal / moment().daysInMonth()) * 100;
 
-		var options = {
-		           strokeWidth: 5,
-		           trailWidth: 2,
-		           color: '#ff4081',
-		           trailColor: '#ffffff',
-		           easing: 'easeInOut',
-		           duration: 1400,
-		           text: {
-		           	value: this.getMonthlyStats()
-		           }
-		       };
+		daily = daily < 0 ? 0 : daily; 
+		weekly = weekly < 0 ? 0 : weekly; 
+		monthly = monthly < 0 ? 0 : monthly; 
 
-       // For demo purposes so the container has some dimensions.
-       // Otherwise progress bar won't be shown
-       var containerStyle = {
-           width: '60vw',
-           height: '25vw',
-       };
-
-		return (
-			<SemiCircle
-			    progress={ this.getProgress() }
-			    options={options}
-			    initialAnimate={true}
-			    containerStyle={containerStyle}
-			    containerClassName={'progressbar'}
-			 />
-		);
+		console.log(monthly, weekly, daily);
+		return [{value: daily, labelStart: Math.floor(this.props.daily)}, {value: weekly, labelStart: Math.floor(this.props.weekly) }, { value: monthly, labelStart: Math.floor(this.props.monthly)}];
 	}
 
 	componentDidMount() {
-		console.log("moi!");
-		new RadialProgressChart('.test', {series: [24, 85]});
+		// series starts from insside
+		progress = new RadialProgressChart('.progress', {series: this.getDataSeries()});
 
+	}
+
+	componentDidUpdate () {
+		progress.update(this.getDataSeries());
 	}
 
 	render() {
 		return (
 		    <div className="content">
 		        <div className="day-row">
-		           { this.getCircle() }
-
+		        {/*}
 			        <div className="availableToday">
-			        	{/*<div className="original">{ parseFloat(this.props.fundsLeft / this.getDaysLeft()).toFixed(2) } </div>*/}
 			           <div className="now">{ parseFloat(this.props.daily).toFixed(2) }€</div>
 			           <span className="description">Left of { parseFloat(this.props.monthlyOriginal / moment().daysInMonth()).toFixed(2) }€</span>
 
 			        </div>
-					
-		       		{/*} <div className="availableThisWeek">
-		           		<span className="original"> { parseFloat(this.props.weeklyFundsLeft / this.getWeeksLeft()).toFixed(2) } </span>
-		               	<span className="now">{ parseFloat(this.props.weekly).toFixed(2) }</span>	
-		           </div> */}     
-		           <div className="forecastContainer">
-		           	<span className="forecast"> { this.getForecast() } €</span>
-		           	<span className="description">Estimated balance</span>
-		           </div>
-		           <div className="test"></div>
+			    */}
 
-		           <button 
-		           		className="add-button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
-		           		onClick={ this.props.setView.bind(this, 'add') }
-		           		>
-		             	<i className="material-icons">add</i>
-		           </button>
+		           <div className="progress">
+			           <button 
+			           		className="add-button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+			           		onClick={ this.props.setView.bind(this, 'add') }
+			           		>
+			             	<i className="material-icons">add</i>
+			           </button>
+
+		           </div>
+
+
 			    </div>
 
 		    </div>
