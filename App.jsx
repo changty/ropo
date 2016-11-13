@@ -17,7 +17,8 @@ class App extends React.Component {
 
         if(ropo === undefined || ropo === null) {
             ropo = {
-                expenses: []
+                expenses: [],
+                favorites: []
             };  
         }
         this.state = ropo;
@@ -148,6 +149,10 @@ class App extends React.Component {
         var timeArr = []; 
         var arr = this.state.expenses; 
 
+        if(!time || time === 'all') {
+            return arr;
+        }
+
         for(var i=0; i<arr.length; i++) {   
 
             if(moment(arr[i].date).isSame(moment(), time)) {
@@ -156,6 +161,19 @@ class App extends React.Component {
  
         }
         return timeArr; 
+    }
+
+    getFavorites() {
+        var arr = this.state.favorites; 
+        return arr; 
+    }
+
+    setFavorite(item) {
+        var arr = this.state.favorites; 
+        arr.push(item); 
+
+        var self = this; 
+        this.setState({favorites: arr}, () => { self.saveState() }); 
     }
 
     updateExpenses(expenses) {
@@ -241,6 +259,10 @@ class App extends React.Component {
                         isRemove = { this.state.isRemove }
                         updateExpenses = { this.updateExpenses.bind(this) }
                         getExpenses = { this.getExpenses.bind(this) }
+                        getFavorites = { this.getFavorites.bind(this) }
+                        setFavorite = { this.setFavorite.bind(this) }
+                        getCurrentView = { this.getCurrentView.bind(this) }
+                        onChangeIndex = { this.onChangeIndex.bind(this) }
                     />
 
 
