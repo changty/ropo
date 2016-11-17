@@ -5,8 +5,12 @@ import List from './List.jsx';
 class Add extends React.Component {
 	constructor(props) {
 		super(props);
+		var val = this.props.defaultValue + "";
+		if(val.indexOf('.') === -1) {
+			val = val + ".00";
+		}
 		this.state = {
-			value: this.props.defaultValue || "0.00",
+			value: val || "0.00",
 			index: 0,
 			active: 'other'
 		}
@@ -90,10 +94,11 @@ class Add extends React.Component {
 	                    resistance = { true }
 	                >
 	                <div className="vertical">
+	                <div className="addValue">
+	                	{ this.state.value }
+	                </div>
 					<div className="bottom">
-						<div className="addValue">
-							{ this.state.value }
-						</div>
+
 
 						<div className="categories">
 							<div onClick={ this.setActive.bind(this, 'other') } className={ this.state.active === 'other' ? 'active category': 'category' }><i className="material-icons">lightbulb_outline</i></div>	

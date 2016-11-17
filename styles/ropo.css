@@ -236,14 +236,14 @@ html, body {
 }
 
 .addValue {
-	width: 80%;
+	width: 90%;
 	text-align:center;
-	border-bottom: 2px solid #666;
-	height: 10vmin;
-	line-height: 10vmin;
-	font-size: 8vmin;
+	border-bottom: 0px solid #666;
+	height: 15vh;
+	line-height: 15vh;
+	font-size: 10vh;
 	margin:auto;
-	margin-bottom: 2vmin;
+	margin-bottom: 5vh;
 }
 
 .expenseList {
@@ -279,4 +279,8 @@ svg text.rbc-label-start {
 .active .material-icons{
 	color: #ff4081 !important;
 	font-size: 8vh !important;
+}
+
+.content.day {
+	background: #222;
 }

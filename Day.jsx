@@ -63,12 +63,13 @@ class Day extends React.Component {
 	}
 
 	componentDidUpdate () {
+		// this does not update labels
 		progress.update(this.getDataSeries());
 	}
 
 	render() {
 		return (
-		    <div className="content">
+		    <div className="content day">
 		        <div className="day-row">
 		        {/*}
 			        <div className="availableToday">
