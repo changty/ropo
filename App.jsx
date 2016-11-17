@@ -163,26 +163,13 @@ class App extends React.Component {
         return timeArr; 
     }
 
-    getFavorites() {
-        var arr = this.state.favorites; 
-        return arr; 
-    }
-
-    setFavorite(item) {
-        var arr = this.state.favorites; 
-        arr.push(item); 
-
-        var self = this; 
-        this.setState({favorites: arr}, () => { self.saveState() }); 
-    }
-
-    updateFavorites(favorites)  {
-        var self = this;
-        this.setState({favorites: favorites}, () => { self.saveState() });
-    }
-
     updateExpenses(expenses) {
         console.log("expenses updated");
+
+        if(expenses === undefined || !expenses) {
+           var expenses = this.state.expenses; 
+        }
+
         var self = this;
         this.setState({expenses: expenses}, () => { self.saveState() });
     }
@@ -195,7 +182,7 @@ class App extends React.Component {
         }
 
         var arr = this.state.expenses; 
-        arr.push({ 
+        arr.unshift({ 
             date: moment(),
             amount: value, 
         });
@@ -237,10 +224,11 @@ class App extends React.Component {
                     addExpense = { this.addExpense.bind(this) }
                     title = { {type: 'icon', content: 'add'} }
 
-                    
-                    setFavorite = { this.setFavorite.bind(this) }
-                    updateFavorites = { this.updateFavorites.bind(this) }
-                    getFavorites = { this.getFavorites.bind(this) }
+                    isRemove = { this.state.isRemove }
+                    updateExpenses = { this.updateExpenses.bind(this) }
+                    expenses = { this.state.expenses }
+                    getCurrentView = { this.getCurrentView.bind(this) }
+                    onChangeIndex = { this.onChangeIndex.bind(this) }
                 />
             );
        }
@@ -267,14 +255,18 @@ class App extends React.Component {
                         monthlyOriginal = { this.getMonthlyOriginal() }
                         setView= { this.setView.bind(this) }
                         close={ this.close.bind(this) }
+
+                        isRemove = { this.state.isRemove }
+                        updateExpenses = { this.updateExpenses.bind(this) }
+                        expenses = { this.state.expenses }
+                        getCurrentView = { this.getCurrentView.bind(this) }
+                        onChangeIndex = { this.onChangeIndex.bind(this) }
                     />
 
                     <List 
                         isRemove = { this.state.isRemove }
                         updateExpenses = { this.updateExpenses.bind(this) }
-                        getExpenses = { this.getExpenses.bind(this) }
-                        getFavorites = { this.getFavorites.bind(this) }
-                        setFavorite = { this.setFavorite.bind(this) }
+                        expenses = { this.state.expenses }
                         getCurrentView = { this.getCurrentView.bind(this) }
                         onChangeIndex = { this.onChangeIndex.bind(this) }
                     />

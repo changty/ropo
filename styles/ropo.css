@@ -259,3 +259,7 @@ svg text.rbc-label-start {
 	color: #fff !important;
 	font-size: 16px !important;
 }
+
+.favorite {
+	background: #ff4081 !important;
+}

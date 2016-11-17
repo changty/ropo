@@ -1,6 +1,6 @@
 import React from 'react'; 
 import SwipeableViews from 'react-swipeable-views'; 
-
+import List from './List.jsx';
 
 class Add extends React.Component {
 	constructor(props) {
@@ -126,7 +126,15 @@ class Add extends React.Component {
 					</div>
 
 					<div className="vertical">
-						<h1>Favorites</h1>
+						<List 
+							favorites = { true }
+							expenses = { this.props.expenses }
+							isRemove = { this.props.isRemove }
+							updateExpenses = { this.props.updateExpenses.bind(this) }
+							getCurrentView = { this.props.getCurrentView.bind(this) }
+							onChangeIndex = { this.props.onChangeIndex.bind(this) }
+							addExpense = { this.props.addExpense.bind(this) }
+						/>
 					</div>
 				</SwipeableViews>
 			);
