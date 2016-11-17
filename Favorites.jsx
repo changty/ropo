@@ -1,30 +1,15 @@
 import React from 'react'; 
 
 
-class List extends React.Component {
-	getExpenses(value) {
-		var array = this.props.getExpenses(value);
-		array.sort(function(a,b){
-		  // Turn your strings into dates, and then subtract them
-		  // to get a value that is either negative, positive, or zero.
-		  return new moment(b.date).diff(moment(a.date));
-		});
-		return array;
-	}
-
+class Favorites extends React.Component {
 	removeEntry(index) {
-		var array = this.props.getExpenses('month'); 
-		array.sort(function(a,b){
-		  // Turn your strings into dates, and then subtract them
-		  // to get a value that is either negative, positive, or zero.
-		  return new moment(b.date).diff(moment(a.date));
-		});
+		var array = this.props.getFAvorites(); 
 		array.splice(index, 1); 
 
 		this.props.updateExpenses(array);	
 	}
 
-	getDayEntry(item, index) {
+	getFavorite(item, index) {
 		return (
 			<li key={ index } className="mdl-list__item mdl-list__item--two-line">
 			  <span className="mdl-list__item-primary-content">
@@ -51,8 +36,8 @@ class List extends React.Component {
 		    	<ul className="demo-list-two mdl-list">
 
 			    	{ 
-			    		this.getExpenses('month').map((item, index) => {
-							return this.getDayEntry(item, index);
+			    		this.props.getFavorites().map((item, index) => {
+							return this.getFavorite(item, index);
 
 			    		})
 			    	 }
@@ -64,3 +49,8 @@ class List extends React.Component {
 }
 
 export default List;
+
+
+
+
+

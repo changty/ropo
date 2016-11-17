@@ -176,6 +176,11 @@ class App extends React.Component {
         this.setState({favorites: arr}, () => { self.saveState() }); 
     }
 
+    updateFavorites(favorites)  {
+        var self = this;
+        this.setState({favorites: favorites}, () => { self.saveState() });
+    }
+
     updateExpenses(expenses) {
         console.log("expenses updated");
         var self = this;
@@ -211,6 +216,9 @@ class App extends React.Component {
     }
 
     getCurrentView() {
+        if(this.state.view.length === 0) {
+            return 1;
+        }
         return this.state.view[this.state.view.length-1]; 
     }
 
@@ -225,8 +233,14 @@ class App extends React.Component {
        if(this.getCurrentView() == 'add') {
             return (
                 <Add 
+                    favorites = { true }
                     addExpense = { this.addExpense.bind(this) }
                     title = { {type: 'icon', content: 'add'} }
+
+                    
+                    setFavorite = { this.setFavorite.bind(this) }
+                    updateFavorites = { this.updateFavorites.bind(this) }
+                    getFavorites = { this.getFavorites.bind(this) }
                 />
             );
        }

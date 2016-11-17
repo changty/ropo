@@ -59,6 +59,7 @@ class Settings extends React.Component {
 				</div>
 
 				<Add
+					favorites = { false }
 					defaultValue = { this.props.monthly }
 					title = { {type: 'icon', content: "done" } }
 					updateValue = { this.updateMonthly.bind(this) }
