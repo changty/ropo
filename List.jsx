@@ -11,6 +11,29 @@ class List extends React.Component {
 		return array;
 	}
 
+	getIcon(category) {
+		if(category == 'food') {
+			return (<i className="material-icons">restaurant</i>);
+		}
+		else if (category == 'drink') {
+			return (<i className="material-icons">local_bar</i>);
+
+		}
+		else if (category == 'activity') {
+			return (<i className="material-icons">local_activity</i>);
+
+		}
+		else if (category == 'grocery') {
+			return (<i className="material-icons">local_grocery_store</i>);
+
+		}
+		else {
+			return (<i className="material-icons">lightbulb_outline</i>);
+
+		}
+
+	}
+
 	removeEntry(index) {
 		this.props.expenses.splice(index, 1); 
 		this.props.updateExpenses(this.props.expenses);	
@@ -28,8 +51,8 @@ class List extends React.Component {
 				<li key={ index } className="mdl-list__item mdl-list__item--two-line">
 				  <span className="mdl-list__item-primary-content">
 				    <i onClick={ this.toggeleFavorite.bind(this, index) } className={ isFavorite + " material-icons mdl-list__item-avatar"}>favorite_border</i>
-				    <span onClick={ this.props.addExpense.bind(this, item.amount, true) }> { item.amount } €</span>
-				    <span onClick={ this.props.addExpense.bind(this, item.amount, true) } className="mdl-list__item-sub-title">{ moment(item.date).format('MMMM Do YYYY, h:mm:ss a') }</span>
+				    <span onClick={ this.props.addExpense.bind(this, item.amount, true, item.category) }> { this.getIcon(item.category) } { item.amount } €</span>
+				    <span onClick={ this.props.addExpense.bind(this, item.amount, true, item.category) } className="mdl-list__item-sub-title">{ moment(item.date).format('MMMM Do YYYY, h:mm:ss a') }</span>
 				  </span>
 
 				  <span className={this.props.isRemove ? '' : 'hidden '  + "mdl-list__item-secondary-content"}>
@@ -48,7 +71,7 @@ class List extends React.Component {
 				<li key={ index } className="mdl-list__item mdl-list__item--two-line">
 				  <span className="mdl-list__item-primary-content">
 				    <i onClick={ this.toggeleFavorite.bind(this, index) } className={ isFavorite + " material-icons mdl-list__item-avatar"}>favorite_border</i>
-				    <span>{ item.amount } €</span>
+				    <span>{ this.getIcon(item.category) } { item.amount } €</span>
 				    <span className="mdl-list__item-sub-title">{ moment(item.date).format('MMMM Do YYYY, h:mm:ss a') }</span>
 				  </span>
 

@@ -7,21 +7,18 @@ class Add extends React.Component {
 		super(props);
 		this.state = {
 			value: this.props.defaultValue || "0.00",
-			index: 0
+			index: 0,
+			active: 'other'
 		}
 	}
 
 	changeValue(event) {
-		console.log(event);
 		var str = this.state.value.toString(); 
 		var index = this.state.index;
 
 		str = str.replace(".", ""); 
 		// backspace
 		if(event == 'backspace') {
-			// index--; 
-			// this.setState({index: index}); 
-			//str = str.slice(0, -1); 
 			str = str.slice(0, -1);
 			if(index > 0) {
 				index--;	
@@ -32,18 +29,9 @@ class Add extends React.Component {
 			str += event;
 		}
 
-		// else if(str === "0") {
-		// 	str = event.target.innerHTML; 
-		// } 
-		// else {
-		// 	str += event.target.innerHTML; 
-		// }
-
-
-		if(index < 4) {
+		if(index < 4 && str.substring(0,1) == '0') {
 			str = str.substring(1, str.length); 
 		}
-
 
 		if(str.length === 1) {
  			str = "00" + str;  
@@ -52,9 +40,11 @@ class Add extends React.Component {
 			str = "0" + str; 
 		}
 
-
 		// Add decimal point
 		str = str.slice(0, -2) + "." + str.slice(-2); 
+		if(str == '0.00') {
+			index = 0;
+		}
 
 		if(!isNaN(str)) {
 			this.setState({value: str, index: index});
@@ -63,6 +53,10 @@ class Add extends React.Component {
 		if(this.props.updateValue) {
 			this.props.updateValue(str);
 		}
+	}
+
+	setActive(category) {
+		this.setState({active: category});
 	}
 
 	getButton() {
@@ -80,7 +74,7 @@ class Add extends React.Component {
 			return(
 				<button 
 					className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-block btn-add" 
-					onClick={ this.props.addExpense.bind(this, this.state.value, true) }
+					onClick={ this.props.addExpense.bind(this, this.state.value, true, this.state.cateogry) }
 				>
 					<i className="material-icons">{this.props.title.content}</i>
 				</button>
@@ -100,6 +94,16 @@ class Add extends React.Component {
 						<div className="addValue">
 							{ this.state.value }
 						</div>
+
+						<div className="categories">
+							<div onClick={ this.setActive.bind(this, 'other') } className={ this.state.active === 'other' ? 'active category': 'category' }><i className="material-icons">lightbulb_outline</i></div>	
+							<div onClick={ this.setActive.bind(this, 'food') } className={ this.state.active === 'food' ?  'active category': 'category'}><i className="material-icons">restaurant</i></div>
+							<div onClick={ this.setActive.bind(this, 'drink') } className={ this.state.active === 'drink' ?  'active category': 'category'}><i className="material-icons">local_bar</i></div>
+							<div onClick={ this.setActive.bind(this, 'activity') } className={ this.state.active === 'activity' ?  'active category': 'category'}><i className="material-icons">local_activity</i></div>
+							<div onClick={ this.setActive.bind(this, 'grocery') } className={ this.state.active === 'grocery' ?  'active category': 'category'}><i className="material-icons">local_grocery_store</i></div>
+
+						</div>
+
 						<div className="keypad">
 							<div className="row">
 								<div className="key key1 mdl-button mdl-js-button mdl-js-ripple-effect" onClick={this.changeValue.bind(this, "1")}>1</div>						
@@ -119,7 +123,7 @@ class Add extends React.Component {
 							<div  className="row">
 								<div className="key keyBackSpace backspace mdl-button mdl-js-button mdl-js-ripple-effect" onClick={this.changeValue.bind(this, "backspace")}><i className="material-icons backspace">backspace</i></div>						
 								<div className="key key0 mdl-button mdl-js-button mdl-js-ripple-effect" onClick={this.changeValue.bind(this, "0")}>0</div>
-								<div className="key keyOk mdl-button mdl-js-button mdl-js-ripple-effect" onClick={ this.props.addExpense.bind(this, this.state.value) }> <i className="material-icons">{this.props.title.content}</i> </div>
+								<div className="key keyOk mdl-button mdl-js-button mdl-js-ripple-effect" onClick={ this.props.addExpense.bind(this, this.state.value, true, this.state.active) }> <i className="material-icons">{this.props.title.content}</i> </div>
 							</div>
 						</div>
 					</div>
@@ -168,7 +172,7 @@ class Add extends React.Component {
 									<div  className="row">
 										<div className="key keyBackSpace backspace mdl-button mdl-js-button mdl-js-ripple-effect" onClick={this.changeValue.bind(this, "backspace")}><i className="material-icons backspace">backspace</i></div>						
 										<div className="key key0 mdl-button mdl-js-button mdl-js-ripple-effect" onClick={this.changeValue.bind(this, "0")}>0</div>
-										<div className="key keyOk mdl-button mdl-js-button mdl-js-ripple-effect" onClick={ this.props.addExpense.bind(this, this.state.value) }> <i className="material-icons">{this.props.title.content}</i> </div>
+										<div className="key keyOk mdl-button mdl-js-button mdl-js-ripple-effect" onClick={ this.props.addExpense.bind(this, this.state.value, this.state.active) }> <i className="material-icons">{this.props.title.content}</i> </div>
 									</div>
 								</div>
 

@@ -165,16 +165,16 @@ class App extends React.Component {
     }
 
 
-    addExpense(value, close) {
+    addExpense(value, close, category) {
         // if not a valid number
         if(isNaN(value) || value == 0) {
             return
         }
-
         var arr = this.state.expenses; 
         arr.unshift({ 
             date: moment(),
             amount: value, 
+            category: category
         });
         var self = this; 
         this.setState({expenses: arr}, () => { self.saveState() }); 

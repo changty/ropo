@@ -263,3 +263,20 @@ svg text.rbc-label-start {
 .favorite {
 	background: #ff4081 !important;
 }
+
+.categories {
+	display:flex;
+	flex-direction: row;
+	justify-content: space-around;
+	width: 100%;
+}
+
+.category .material-icons {
+	font-size: 8vh;
+	color: #999;
+}
+
+.active .material-icons{
+	color: #ff4081 !important;
+	font-size: 8vh !important;
+}
