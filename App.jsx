@@ -34,7 +34,6 @@ class App extends React.Component {
     }
 
     saveState() {
-        console.log("Saving state", this.state);
         localStorage.setItem(LOCALSTORAGE_NAME, JSON.stringify( this.state ));
     }
 
@@ -45,14 +44,11 @@ class App extends React.Component {
 
     getDaysLeft() {
         var daysLeft = moment(moment().endOf('month')).diff(moment().today, 'days');
-        console.log("days left:", daysLeft);
         return daysLeft; 
     }
 
     getWeeksInMonth() {
         var weeks = moment(moment().endOf('month')).diff(moment().startOf('month'), 'weeks');
-
-        console.log("weeks: ", weeks);
     }
     
     getAvailableFundsDaily() {
@@ -90,7 +86,6 @@ class App extends React.Component {
                 value -= parseFloat(arr[i].amount); 
             }
         }
-        console.log("GetAvailable funds weekly", value);
         return value; 
     }
 
@@ -105,7 +100,6 @@ class App extends React.Component {
             }
 
         }
-        console.log("monthly funds", this.state.monthly);
 
         return value; 
     }
@@ -122,7 +116,6 @@ class App extends React.Component {
             }
 
         }
-        console.log("funds left: ", value);
         return value; 
     }
 
@@ -137,7 +130,6 @@ class App extends React.Component {
             }
 
         }
-        console.log("funs left weekly: ", value);
         return value; 
     }
 
@@ -164,8 +156,6 @@ class App extends React.Component {
     }
 
     updateExpenses(expenses) {
-        console.log("expenses updated");
-
         if(expenses === undefined || !expenses) {
            var expenses = this.state.expenses; 
         }
@@ -175,7 +165,7 @@ class App extends React.Component {
     }
 
 
-    addExpense(value) {
+    addExpense(value, close) {
         // if not a valid number
         if(isNaN(value) || value == 0) {
             return
@@ -188,17 +178,20 @@ class App extends React.Component {
         });
         var self = this; 
         this.setState({expenses: arr}, () => { self.saveState() }); 
-        this.close();
+
+        if(close) {
+          this.close();
+        }
 
     }
 
     toggleIsRemove() {
         var isRemove = this.state.isRemove; 
-        console.log("is remove");
         this.setState({isRemove: !isRemove});
     }
 
     setView(view) { 
+        console.log("View: ", view);
         this.setState({view: this.state.view.concat([view]), title: view});
     }
 
@@ -216,7 +209,6 @@ class App extends React.Component {
     }
 
     viewSelector() {
-        console.log(this.getCurrentView());
        if(this.getCurrentView() == 'add') {
             return (
                 <Add 

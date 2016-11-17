@@ -80,7 +80,7 @@ class Add extends React.Component {
 			return(
 				<button 
 					className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-block btn-add" 
-					onClick={ this.props.addExpense.bind(this, this.state.value) }
+					onClick={ this.props.addExpense.bind(this, this.state.value, true) }
 				>
 					<i className="material-icons">{this.props.title.content}</i>
 				</button>

@@ -20,7 +20,6 @@ class Day extends React.Component {
 		var averagePerDay = this.props.monthlyOriginal / moment().daysInMonth(); 
 
 		var averageSpending = this.props.monthly - (parseFloat(averagePerDay) * parseFloat(this.getDaysLeft()));
-		console.log("average spending: ", averageSpending);
 
 		return parseFloat(averageSpending).toFixed(2);
 		// return parseFloat(this.props.monthly - (this.getDaysLeft() * averageSpending)).toFixed(2);

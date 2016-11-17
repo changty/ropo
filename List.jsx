@@ -18,7 +18,6 @@ class List extends React.Component {
 
 	toggeleFavorite(index) {
 		this.props.expenses[index].favorite = !this.props.expenses[index].favorite; 
-
 		this.props.updateExpenses(this.props.expenses);	
 	}
 
@@ -26,11 +25,11 @@ class List extends React.Component {
 		var isFavorite = item.favorite ? "favorite" : "";
 		if(favorite && isFavorite) {
 			return (
-				<li onClick={ this.props.addExpense.bind(this, item.amount) } key={ index } className="mdl-list__item mdl-list__item--two-line">
+				<li key={ index } className="mdl-list__item mdl-list__item--two-line">
 				  <span className="mdl-list__item-primary-content">
 				    <i onClick={ this.toggeleFavorite.bind(this, index) } className={ isFavorite + " material-icons mdl-list__item-avatar"}>favorite_border</i>
-				    <span>{ item.amount } €</span>
-				    <span className="mdl-list__item-sub-title">{ moment(item.date).format('MMMM Do YYYY, h:mm:ss a') }</span>
+				    <span onClick={ this.props.addExpense.bind(this, item.amount, true) }> { item.amount } €</span>
+				    <span onClick={ this.props.addExpense.bind(this, item.amount, true) } className="mdl-list__item-sub-title">{ moment(item.date).format('MMMM Do YYYY, h:mm:ss a') }</span>
 				  </span>
 
 				  <span className={this.props.isRemove ? '' : 'hidden '  + "mdl-list__item-secondary-content"}>
