@@ -52,18 +52,20 @@ class Day extends React.Component {
 		weekly = weekly < 0 ? 0 : weekly; 
 		monthly = monthly < 0 ? 0 : monthly; 
 
-		console.log(monthly, weekly, daily);
-		return [{value: daily, labelStart: Math.floor(this.props.daily)}, {value: weekly, labelStart: Math.floor(this.props.weekly) }, { value: monthly, labelStart: Math.floor(this.props.monthly)}];
+		console.log(monthly, weekly, daily, null);
+		return [{value: daily, labelStart: Math.floor(this.props.daily), fill: '#000000'}, {value: weekly, labelStart: Math.floor(this.props.weekly), fill: '#ffffff' }, { value: monthly, labelStart: Math.floor(this.props.monthly), fill: '#ffffff'}];
 	}
 
 	componentDidMount() {
 		// series starts from insside
-		progress = new RadialProgressChart('.progress', {series: this.getDataSeries()});
+		console.log("mount progress");
+		progress = new RadialProgressChart('.progress', {series: this.getDataSeries(), labelStartColor: "#ffffff"});
 
 	}
 
 	componentDidUpdate () {
 		// this does not update labels
+		console.log("update progress");
 		progress.update(this.getDataSeries());
 	}
 

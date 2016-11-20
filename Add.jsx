@@ -5,12 +5,20 @@ import List from './List.jsx';
 class Add extends React.Component {
 	constructor(props) {
 		super(props);
-		var val = this.props.defaultValue + "";
+		var val = ""; 
+		if(this.props.defaultValue === undefined) {
+			val = "0.00"; 
+		}
+		else {
+			val = this.props.defaultValue + "";
+		}
+
 		if(val.indexOf('.') === -1) {
+			console.log("decimal");
 			val = val + ".00";
 		}
 		this.state = {
-			value: val || "0.00",
+			value: val,
 			index: 0,
 			active: 'other'
 		}
@@ -86,6 +94,7 @@ class Add extends React.Component {
 		}
 	}
 	render() {
+			console.log("drawing value: ", this.state.value);
 
 		if(this.props.favorites) {
 			return (
