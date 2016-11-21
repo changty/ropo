@@ -45,45 +45,86 @@ class List extends React.Component {
 	}
 
 	getEntry(item, index, favorite) {
+/*
+		//Old way of doing things
+		<li key={ index } className="mdl-list__item mdl-list__item--two-line">
+		  <span className="mdl-list__item-primary-content">
+		    <i onClick={ this.toggeleFavorite.bind(this, index) } className={ isFavorite + " material-icons mdl-list__item-avatar"}>favorite_border</i>
+		    <span onClick={ this.props.addExpense.bind(this, item.amount, true, item.category) }> { this.getIcon(item.category) } { item.amount } €</span>
+		    <span onClick={ this.props.addExpense.bind(this, item.amount, true, item.category) } className="mdl-list__item-sub-title">{ moment(item.date).format('MMMM Do YYYY, h:mm:ss a') }</span>
+		  </span>
+
+		  <span className={this.props.isRemove ? '' : 'hidden '  + "mdl-list__item-secondary-content"}>
+		  	<button 
+		  		className="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" 
+		  		onClick={ this.removeEntry.bind(this, index) }
+		  		>
+		  	  <i className="material-icons" key={ index }>delete</i>
+		  	</button>
+		  </span>
+		</li>
+*/
+
+		// favorite is for showing only favorited items. 
+		// isFavorite tells, if the item is favorited
+		var removeClass = this.props.isRemove ? '' : 'hidden '; 
+		removeClass += "mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"
+
 		var isFavorite = item.favorite ? "favorite" : "";
 		if(favorite && isFavorite) {
 			return (
-				<li key={ index } className="mdl-list__item mdl-list__item--two-line">
-				  <span className="mdl-list__item-primary-content">
-				    <i onClick={ this.toggeleFavorite.bind(this, index) } className={ isFavorite + " material-icons mdl-list__item-avatar"}>favorite_border</i>
-				    <span onClick={ this.props.addExpense.bind(this, item.amount, true, item.category) }> { this.getIcon(item.category) } { item.amount } €</span>
-				    <span onClick={ this.props.addExpense.bind(this, item.amount, true, item.category) } className="mdl-list__item-sub-title">{ moment(item.date).format('MMMM Do YYYY, h:mm:ss a') }</span>
-				  </span>
-
-				  <span className={this.props.isRemove ? '' : 'hidden '  + "mdl-list__item-secondary-content"}>
-				  	<button 
-				  		className="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" 
-				  		onClick={ this.removeEntry.bind(this, index) }
-				  		>
-				  	  <i className="material-icons" key={ index }>delete</i>
-				  	</button>
-				  </span>
-				</li>
+				<div key={ index } className="demo-card-wide mdl-card mdl-shadow--2dp">
+				  <div className="mdl-card__title">
+				    <h2 className="mdl-card__title-text">{ item.amount }€</h2>
+				  </div>
+				  <div className="mdl-card__supporting-text">
+				  	{ item.category } { moment(item.date).format('MMMM Do YYYY, h:mm:ss a') }
+				  </div>
+				  <div className="mdl-card__actions mdl-card--border">
+				    <a onClick={ this.props.addExpense.bind(this, item.amount, true, item.category) } className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+				      Get Started
+				    </a>
+				  </div>
+				  <div className="mdl-card__menu">
+				    <button onClick={ this.toggeleFavorite.bind(this, index) } className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+				      <i className={ isFavorite + " material-icons"}>favorite_border</i>
+				    </button>
+				    <button 
+				    	className={ removeClass } 
+				    	onClick={ this.removeEntry.bind(this, index) }
+				    	>
+				      <i className="material-icons" key={ index }>delete</i>
+				    </button>
+				  </div>
+				</div>
 			);
 		}
 		else if(!favorite) {
 			return (
-				<li key={ index } className="mdl-list__item mdl-list__item--two-line">
-				  <span className="mdl-list__item-primary-content">
-				    <i onClick={ this.toggeleFavorite.bind(this, index) } className={ isFavorite + " material-icons mdl-list__item-avatar"}>favorite_border</i>
-				    <span>{ this.getIcon(item.category) } { item.amount } €</span>
-				    <span className="mdl-list__item-sub-title">{ moment(item.date).format('MMMM Do YYYY, h:mm:ss a') }</span>
-				  </span>
-
-				  <span className={this.props.isRemove ? '' : 'hidden '  + "mdl-list__item-secondary-content"}>
-				  	<button 
-				  		className="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" 
-				  		onClick={ this.removeEntry.bind(this, index) }
-				  		>
-				  	  <i className="material-icons" key={ index }>delete</i>
-				  	</button>
-				  </span>
-				</li>
+				<div key={ index } className="demo-card-wide mdl-card mdl-shadow--2dp">
+				  <div className="mdl-card__title">
+				    <h2 className="mdl-card__title-text">{ item.amount }€</h2>
+				  </div>
+				  <div className="mdl-card__supporting-text">
+				  	{ item.category } { moment(item.date).format('MMMM Do YYYY, h:mm:ss a') }
+				  </div>
+				  <div className="mdl-card__actions mdl-card--border">
+				    <a className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+				      Get Started
+				    </a>
+				  </div>
+				  <div className="mdl-card__menu">
+				    <button onClick={ this.toggeleFavorite.bind(this, index) } className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+				      <i className={ isFavorite + " material-icons"}>favorite_border</i>
+				    </button>
+				    <button 
+				    	className={ removeClass } 
+				    	onClick={ this.removeEntry.bind(this, index) }
+				    	>
+				      <i className="material-icons" key={ index }>delete</i>
+				    </button>
+				  </div>
+				</div>
 			);
 		}
 	}
@@ -92,7 +133,7 @@ class List extends React.Component {
 	render() {
 		return (
 		    <div className="content expenseList">
-		    	<ul className="demo-list-two mdl-list">
+		    	{/*<ul className="demo-list-two mdl-list">*/}
 
 			    	{ 
 			    		this.props.expenses.map((item, index) => {
@@ -101,7 +142,7 @@ class List extends React.Component {
 			    		})
 			    	 }
 
-			    </ul>
+			   {/* </ul>*/}
 		    </div>
 		);
 	}

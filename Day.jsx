@@ -51,15 +51,45 @@ class Day extends React.Component {
 		daily = daily < 0 ? 0 : daily; 
 		weekly = weekly < 0 ? 0 : weekly; 
 		monthly = monthly < 0 ? 0 : monthly; 
-
-		console.log(monthly, weekly, daily, null);
-		return [{value: daily, labelStart: Math.floor(this.props.daily), fill: '#000000'}, {value: weekly, labelStart: Math.floor(this.props.weekly), fill: '#ffffff' }, { value: monthly, labelStart: Math.floor(this.props.monthly), fill: '#ffffff'}];
+		console.log("moi5");
+		return [ 
+			{
+				value: daily, 
+				labelStart: Math.floor(this.props.daily), 
+				fill: '#000000', 
+				reverse: true,
+				// linearGradient: {
+				//     stops: [
+				//       {offset: '0%', 'stop-color': '#fe08b5', 'stop-opacity': 1},
+				//       {offset: '100%', 'stop-color': '#ff1410', 'stop-opacity': 1}
+				//     ]
+				// }
+			}, 
+			{
+				value: weekly, 
+				labelStart: Math.floor(this.props.weekly), 
+				fill: '#ffffff',
+				reverse: true
+			}, 
+			{ 
+				value: monthly, 
+				labelStart: Math.floor(this.props.monthly), 
+				fill: '#ffffff', 
+				reverse: true,
+				// color: {
+				//     linearGradient: {},
+				//     stops: [
+				//       {offset: '0%', 'stop-color': '#fe08b5', 'stop-opacity': 1},
+				//       {offset: '100%', 'stop-color': '#ff1410', 'stop-opacity': 1}
+				//     ]
+				// }
+			}];
 	}
 
 	componentDidMount() {
 		// series starts from insside
-		console.log("mount progress");
-		progress = new RadialProgressChart('.progress', {series: this.getDataSeries(), labelStartColor: "#ffffff"});
+		console.log("mount progress.");
+		progress = new RadialProgressChart('.progress', {series: this.getDataSeries(), shadow: { width: 5 } });
 
 	}
 

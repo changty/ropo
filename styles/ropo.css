@@ -261,7 +261,7 @@ svg text.rbc-label-start {
 }
 
 .favorite {
-	background: #ff4081 !important;
+	color: #ffffff !important;
 }
 
 .categories {
@@ -283,4 +283,17 @@ svg text.rbc-label-start {
 
 .content.day {
 	background: #222;
+}
+
+.demo-card-wide.mdl-card {
+  margin:auto;
+  width: 95vw;
+  margin-bottom: 2vh;
+}
+
+.demo-card-wide > .mdl-card__title {
+  color: #fff;
+  padding-top: 3vh;
+  padding-bottom: 3vh;
+  background: #ff4081;
 }
