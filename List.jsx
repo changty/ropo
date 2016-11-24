@@ -72,6 +72,7 @@ class List extends React.Component {
 
 		var isFavorite = item.favorite ? "favorite" : "";
 		if(favorite && isFavorite) {
+			console.log("favorite", item.amount);
 			return (
 				<div key={ index } className="demo-card-wide mdl-card mdl-shadow--2dp">
 				  <div className="mdl-card__title">
