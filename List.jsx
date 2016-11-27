@@ -13,25 +13,42 @@ class List extends React.Component {
 
 	getIcon(category) {
 		if(category == 'food') {
-			return (<i className="material-icons">restaurant</i>);
+			return (<i className="material-icons cat-icon">restaurant</i>);
 		}
 		else if (category == 'drink') {
-			return (<i className="material-icons">local_bar</i>);
+			return (<i className="material-icons cat-icon">local_bar</i>);
 
 		}
 		else if (category == 'activity') {
-			return (<i className="material-icons">local_activity</i>);
+			return (<i className="material-icons cat-icon">local_activity</i>);
 
 		}
 		else if (category == 'grocery') {
-			return (<i className="material-icons">local_grocery_store</i>);
+			return (<i className="material-icons cat-icon">local_grocery_store</i>);
 
 		}
 		else {
-			return (<i className="material-icons">lightbulb_outline</i>);
+			return (<i className="material-icons cat-icon">lightbulb_outline</i>);
 
 		}
+	}
 
+	getCategoryColor(category) {
+		if(category == 'food') {
+			return "cat-food";
+		}
+		else if (category == 'drink') {
+			return "cat-drink";
+		}
+		else if (category == 'activity') {
+			return "cat-activity";
+		}
+		else if (category == 'grocery') {
+			return "cat-grocery";
+		}
+		else {
+			return "cat-other";
+		}
 	}
 
 	removeEntry(index) {
@@ -75,27 +92,38 @@ class List extends React.Component {
 			console.log("favorite", item.amount);
 			return (
 				<div key={ index } className="demo-card-wide mdl-card mdl-shadow--2dp">
-				  <div className="mdl-card__title">
+				  <div 
+				  	className={ this.getCategoryColor(item.category) + " mdl-card__title" }
+				    onClick={ this.props.addExpense.bind(this, item.amount, true, item.category) }
+				   >
 				    <h2 className="mdl-card__title-text">{ item.amount }€</h2>
 				  </div>
-				  <div className="mdl-card__supporting-text">
-				  	{ item.category } { moment(item.date).format('MMMM Do YYYY, h:mm:ss a') }
+				  <div 
+				  	className="mdl-card__supporting-text"
+				  	onClick={ this.props.addExpense.bind(this, item.amount, true, item.category) }
+				  >
+				  	 { this.getIcon(item.category) }
+				  	 { moment(item.date).format('MMMM Do YYYY, h:mm:ss a') }
 				  </div>
+				  {/*
 				  <div className="mdl-card__actions mdl-card--border">
 				    <a onClick={ this.props.addExpense.bind(this, item.amount, true, item.category) } className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
 				      Get Started
 				    </a>
 				  </div>
+				*/}
 				  <div className="mdl-card__menu">
-				    <button onClick={ this.toggeleFavorite.bind(this, index) } className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-				      <i className={ isFavorite + " material-icons"}>favorite_border</i>
-				    </button>
-				    <button 
-				    	className={ removeClass } 
-				    	onClick={ this.removeEntry.bind(this, index) }
-				    	>
-				      <i className="material-icons" key={ index }>delete</i>
-				    </button>
+					  <button 
+					  	className="mdl-button mdl-button--icon mdl-js-button delete"
+					  	onClick={ this.removeEntry.bind(this, index) }
+					  	>
+					    <i className="material-icons" key={ index }>delete</i>
+					  </button>
+
+					    <button onClick={ this.toggeleFavorite.bind(this, index) } className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+					      <i className={ isFavorite + " material-icons"}>favorite_border</i>
+					    </button>
+
 				  </div>
 				</div>
 			);
@@ -103,27 +131,32 @@ class List extends React.Component {
 		else if(!favorite) {
 			return (
 				<div key={ index } className="demo-card-wide mdl-card mdl-shadow--2dp">
-				  <div className="mdl-card__title">
+				  <div className={ this.getCategoryColor(item.category) + " mdl-card__title" }>
 				    <h2 className="mdl-card__title-text">{ item.amount }€</h2>
 				  </div>
 				  <div className="mdl-card__supporting-text">
-				  	{ item.category } { moment(item.date).format('MMMM Do YYYY, h:mm:ss a') }
+				  	{ this.getIcon(item.category) }
+				  	{ moment(item.date).format('dddd Do MMMM h:mm') }
 				  </div>
+				  {/*
 				  <div className="mdl-card__actions mdl-card--border">
 				    <a className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
 				      Get Started
 				    </a>
 				  </div>
+				*/}
 				  <div className="mdl-card__menu">
+				  <button 
+				  	className="mdl-button mdl-button--icon mdl-js-button delete"
+				  	onClick={ this.removeEntry.bind(this, index) }
+				  	>
+				    <i className="material-icons" key={ index }>delete</i>
+				  </button>
+
 				    <button onClick={ this.toggeleFavorite.bind(this, index) } className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
 				      <i className={ isFavorite + " material-icons"}>favorite_border</i>
 				    </button>
-				    <button 
-				    	className={ removeClass } 
-				    	onClick={ this.removeEntry.bind(this, index) }
-				    	>
-				      <i className="material-icons" key={ index }>delete</i>
-				    </button>
+
 				  </div>
 				</div>
 			);

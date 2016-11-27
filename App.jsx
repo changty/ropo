@@ -284,16 +284,16 @@ class App extends React.Component {
     }
 
     getRightNavButton() {
-        if(this.getCurrentView() == '2') {
-            return (
-                <button 
-                    className="rightNav list mdl-button mdl-js-button mdl-js-ripple-effect"
-                    onClick={ this.toggleIsRemove.bind(this) }
-                >
-                <i className="material-icons">delete</i>
-                </button>
-            );     
-        }
+        // if(this.getCurrentView() == '2') {
+        //     return (
+        //         <button 
+        //             className="rightNav list mdl-button mdl-js-button mdl-js-ripple-effect"
+        //             onClick={ this.toggleIsRemove.bind(this) }
+        //         >
+        //         <i className="material-icons">delete</i>
+        //         </button>
+        //     );     
+        // }
     }
 
     onChangeIndex(index, indexLatest) {
