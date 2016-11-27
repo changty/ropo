@@ -77,7 +77,14 @@ class App extends React.Component {
         value = value / this.getWeeksLeft(); 
 
         // new way
-        value = this.getWeeklyBudget() / (this.getDaysLeft()/7);
+
+        var daysLeft = this.getDaysLeft(); 
+        if(daysLeft < 7) {
+            daysLeft = 7; 
+        }
+        value = this.getWeeklyBudget() / (daysLeft/7);
+        console.log(value, this.getWeeklyBudget(), this.getDaysLeft()/7);
+
         var arr = this.state.expenses; 
 
         for(var i=0; i<arr.length; i++) {

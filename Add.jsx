@@ -99,7 +99,7 @@ class Add extends React.Component {
 		if(this.props.favorites) {
 			return (
 				<SwipeableViews
-						axis = { 'y' }
+						axis = { 'x' }
 	                    resistance = { true }
 	                >
 	                <div className="vertical">

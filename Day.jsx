@@ -33,8 +33,6 @@ class Day extends React.Component {
 			+    	'<span class="description">Left of '+ parseFloat(this.props.monthlyOriginal).toFixed(2)+'€</span>'
 
 			+'</div>'
-
-		console.log(str); 
 		return str; 
 		
 	}
@@ -51,7 +49,7 @@ class Day extends React.Component {
 		daily = daily < 0 ? 0 : daily; 
 		weekly = weekly < 0 ? 0 : weekly; 
 		monthly = monthly < 0 ? 0 : monthly; 
-		console.log("moi5");
+		console.log("this.props.weekly", this.props.weekly);
 		return [ 
 			{
 				value: daily, 

@@ -299,6 +299,7 @@ svg text.rbc-label-start {
 }
 
 .delete {
+	margin-right: 5vw;
 	color: #fff !important;
 }
 
