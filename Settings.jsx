@@ -38,6 +38,7 @@ class Settings extends React.Component {
 	}
 
 	render() {
+		console.log("Funds", this.state.monthly, moment().daysInMonth())
 		return (
 			<div className="content">
 				<h4>Set budget for this month</h4>
@@ -53,7 +54,7 @@ class Settings extends React.Component {
 			*/}
 
 				<div className="availableToday">
-					<div className="now">{ parseFloat(this.state.monthly / moment().daysInMonth()).toFixed(2) } </div>
+					<div className="now">{ parseFloat(this.state.monthly / this.getDaysLeft()).toFixed(2) } </div>
 				   <span className="description">Daily budget</span>
 
 				</div>

@@ -52,12 +52,8 @@ class App extends React.Component {
     }
     
     getAvailableFundsDaily() {
-        // old method
-        var value = this.state.monthly || 0; 
-        value = value / this.getDaysLeft(); 
-
         // new method
-        value = this.getDailyBudget() / this.getDaysLeft(); 
+        var value = this.getDailyBudget() / this.getDaysLeft(); 
 
         var arr = this.state.expenses; 
 
@@ -118,11 +114,12 @@ class App extends React.Component {
 
         for(var i=0; i<arr.length; i++) {
 
-            if(moment(arr[i].date).isBefore(moment(), 'day')) {
+            if(moment(arr[i].date).isBefore(moment(), 'day') && moment(arr[i].date).isAfter(moment().startOf('month'))) {
                 value -= parseFloat(arr[i].amount); 
             }
 
         }
+        console.log("Value", value);
         return value; 
     }
 
@@ -132,7 +129,7 @@ class App extends React.Component {
 
         for(var i=0; i<arr.length; i++) {
 
-            if(moment(arr[i].date).isBefore(moment(), 'week')) {
+            if(moment(arr[i].date).isBefore(moment(), 'week') && moment(arr[i].date).isAfter(moment().startOf('week'))) {
                 value -= parseFloat(arr[i].amount); 
             }
 

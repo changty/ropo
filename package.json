@@ -4,7 +4,8 @@
   "description": "Keep track of your spending",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot"
+    "start": "webpack-dev-server --hot",
+    "compile": "NODE_ENV=production webpack -p --config webpack.production.config.js"
   },
   "author": "Einari Kurvinen",
   "license": "GPL-3.0",
